@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://ruleml.org/spec" xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/"
+	targetNamespace="http://ruleml.org/spec" elementFormDefault="qualified">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+          
+            event algebra module part of Reaction RuleML
+			This is the XML Schema of the event algebra module for Reaction RuleML
+			File: event_algebra_module.xsd
+			Version: 1.0
+			Last Modification: 2011-03-22
+			
+			This schema declares the following Reaction RuleML elements and attributes:
+                                                    
+                  Event Algebra Operators
+                  
+                  * Operator (generic event operator)
+                  * Sequence 
+                  * Disjunction 
+                  * Xor 
+                  * Conjunction 
+                  * Concurrent 
+                  * Not 
+                  * Any 
+                  * Aperiodic 
+                  * Periodic 
+                  * AtLeast 
+                  * ATMost 
+                  * Operator             
+
+ 			
+			The approach is modelled after that used in "Modularization of XHTML in XML Schema"
+			WD [http://www.w3.org/TR/xhtml-m12n-schema/], which will soon be integrated with
+			"Modularization of XHTML" (REC-xhtml-modularization-20010410)
+			[http://www.w3.org/TR/xhtml-modularization/].
+		</xs:documentation>
+		
+		<xs:appinfo>
+			<dc:title>Reaction RuleML Schema</dc:title>
+			<dc:version>1.0</dc:version>
+			<dc:creator>Adrian Paschke (paschke AT gmx.de)</dc:creator>
+			<dc:subject>RuleML, custom-built for Reaction RuleML 1.0</dc:subject> 
+			<dc:description>custom-built main module for Reaction RuleML</dc:description> 
+			<dc:date>2011-03-22T29:11:17-0300</dc:date>
+			<dc:language>en</dc:language>
+			<dc:rights>'Copyright 2015 RuleML Inc. -- Licensed under the RuleML Specification License, Version 1.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://ruleml.org/licensing/RSL1.0-RuleML. Disclaimer: THIS SPECIFICATION IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED WARRANTIES, ..., EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. See the License for the specifics governing permissions and limitations under the License.</dc:rights> <dcterms:rights>http://ruleml.org/licensing/RSL1.0-RuleML</dcterms:rights>  
+			 <dc:relation>http://reaction.ruleml.org</dc:relation>
+		</xs:appinfo>		
+	</xs:annotation>		
+	
+	
+	<!--( Sequence | Disjunction | Xor | Conjunction | Concurrent | Not | Any | Aperiodic | Periodic | AtLeast | ATMost | Operator )-->
+	
+	<xs:group name="event_algebra_group.content">
+		<xs:choice>
+			<xs:element ref="Sequence"/>
+			<xs:element ref="Disjunction"/>
+			<xs:element ref="Xor"/>
+			<xs:element ref="Conjunction"/>
+			<xs:element ref="Concurrent"/>
+			<xs:element ref="Not"/>
+			<xs:element name="Any" type="EventAlgebraOperator.type"/>
+			<xs:element ref="Aperiodic"/>
+			<xs:element ref="Periodic"/>
+			<xs:element ref="AtLeast"/>
+			<xs:element ref="AtMost"/>
+			<xs:element name="Operator" type="EventAlgebraOperator.type"/> 
+		</xs:choice>
+	</xs:group>	
+	
+	<!--
+      *** (Operator) ***
+      
+      See: http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-Operator
+      
+      content model: 
+      ECA Reaction RuleML: ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (on)* ) 
+      CEP Reaction RuleML: ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (on)* ) 
+            
+      attributes: @type?, @mode?, @arity?, @card?, @minCard?, @maxCard?, @weight?, @style?, @direction?, @scope?, @closure?, @per?, @meta?, @qualify?, @node?, @iri?, @vocab?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base?
+	-->
+	<xs:attributeGroup name="EventAlgebraOperator.attlist">	
+		<xs:attributeGroup ref="event-interface.attlist"/>
+		<xs:attributeGroup ref="node-element.attlist"/>
+		<xs:attributeGroup ref="xml.attlist"/>
+	</xs:attributeGroup>
+	<xs:group name="EventAlgebraOperator.content">
+		<xs:sequence>
+			<xs:group ref="meta-roles.content"/>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="on"/>				
+			</xs:choice>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="EventAlgebraOperator.type">
+		<xs:group ref="EventAlgebraOperator.content"/>
+		<xs:attributeGroup ref="EventAlgebraOperator.attlist"/>
+	</xs:complexType>
+	
+	<xs:element name="Sequence" type="EventAlgebraOperator.type"/>
+	<xs:element name="Disjunction" type="EventAlgebraOperator.type"/>
+	<xs:element name="Xor" type="EventAlgebraOperator.type"/>
+	<xs:element name="Conjunction" type="EventAlgebraOperator.type"/>
+	<xs:element name="Concurrent" type="EventAlgebraOperator.type"/>
+
+	<!--
+      *** Not ***
+      
+      "Not on Even2 at [Event1, Event3]" ("Event 2 does not occur between [Event 1 and Event 3]")
+      
+      see: http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-Not
+      
+      content model: 
+      ECA Reaction RuleML: ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (on, at )? ) 
+      CEP Reaction RuleML: ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (on, at )? ) 
+      
+      attributes: @type?, @mode?, @arity?, @card?, @minCard?, @maxCard?, @weight?, @style?, @direction?, @scope?, @closure?, @per?, @meta?, @qualify?, @node?, @iri?, @vocab?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base? 
+	-->
+	<xs:attributeGroup name="Not.attlist">
+		<xs:attributeGroup ref="EventAlgebraOperator.attlist"/>
+	</xs:attributeGroup>
+	<xs:group name="Not.content">
+		<xs:sequence>
+			<xs:element ref="oid" minOccurs="0"/>
+			<xs:choice>
+				<xs:element ref="on"/>				
+			</xs:choice>
+			<xs:choice>
+				<xs:element ref="at"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="Not.type">
+		<xs:group ref="Not.content"/>
+		<xs:attributeGroup ref="Not.attlist"/>
+	</xs:complexType>
+	<xs:element name="Not" type="Not.type"/>
+
+	<!--
+      *** Aperiodic ***
+      
+      "Aperiodic on Event2 at [Event1, Event3]" ("Event2 does occur aperiodically between [Event 1 and Event3]")
+      possibly with multiple accumlated occurences of Event 2 (@size attribute) 
+      
+            see: http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-Aperiodic
+      
+      content model: 
+      ECA Reaction RuleML: ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (on, at )? ) 
+      CEP Reaction RuleML: ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (on, at )? ) 
+      
+      attributes: @type?, @mode?, @arity?, @card?, @minCard?, @maxCard?, @weight?, @style?, @direction?, @scope?, @closure?, @per?, @meta?, @qualify?, @node?, @iri?, @vocab?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base?
+	-->
+
+	<xs:element name="Aperiodic" type="Not.type"/>
+	
+	<!--
+      *** Periodic ***
+      
+      "Periodic at TimeEvent2 at [Event1, Event3]" ("at TimeEvent2 does occur periodically between time interval [Event 1 and Event3]")
+      
+      see: http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-Periodic
+      
+      content model: 
+      ECA Reaction RuleML: ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (at, at)? ) 
+      CEP Reaction RuleML: ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (at, at)? ) 
+      
+      attributes: @type?, @mode?, @arity?, @card?, @minCard?, @maxCard?, @weight?, @style?, @direction?, @scope?, @closure?, @per?, @meta?, @qualify?, @node?, @iri?, @vocab?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base?
+-->
+	<xs:attributeGroup name="Periodic.attlist">
+		<xs:attributeGroup ref="EventAlgebraOperator.attlist"/>
+	</xs:attributeGroup>
+	<xs:group name="Periodic.content">
+		<xs:sequence>
+			<xs:element ref="oid" minOccurs="0"/>
+			<xs:choice>
+				<xs:element ref="at"/>
+			</xs:choice>
+			<xs:choice>
+				<xs:element ref="at"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="Periodic.type">
+		<xs:group ref="Periodic.content"/>
+		<xs:attributeGroup ref="Periodic.attlist"/>
+	</xs:complexType>
+	<xs:element name="Periodic" type="Periodic.type"/>
+
+	<!--
+      *** AtLeast / AtMost ***
+      
+      "AtLeast @size occurrences on Event"
+      "AtMost @size occurrences on Event"
+      
+      see: http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-AtLeast
+      see: http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-AtMost
+      
+      content model: 
+      ECA Reaction RuleML: ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (on)* ) 
+      CEP Reaction RuleML: ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (on)* ) 
+      
+      attributes: @type?, @mode?, @arity?, @card?, @minCard?, @maxCard?, @weight?, @style?, @direction?, @scope?, @closure?, @per?, @meta?, @qualify?, @node?, @iri?, @vocab?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base? 
+	-->  
+	<xs:element name="AtLeast" type="EventAlgebraOperator.type"/>
+	<xs:element name="AtMost" type="EventAlgebraOperator.type"/>
+	
+</xs:schema>
+
+

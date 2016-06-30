@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bindings xmlns="http://java.sun.com/xml/ns/jaxb"
+          xmlns:xs="http://www.w3.org/2001/XMLSchema"
+          xmlns:annox="http://annox.dev.java.net"
+          xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+          extensionBindingPrefixes="xjc annox"
+          version="2.1">
+    <bindings schemaLocation="deliberation.xsd" node="/xs:schema">
+        <schemaBindings>
+            <package name="org.ruleml.deliberation"/>
+        </schemaBindings>
+    </bindings>
+
+    <bindings schemaLocation="modules/performative_module.xsd">
+        <bindings node="xs:complexType[@name='RuleML.type']">
+            <annox:annotateClass>@javax.xml.bind.annotation.XmlRootElement(name="RuleML")</annox:annotateClass>
+        </bindings>
+    </bindings>
+
+    <bindings schemaLocation="modules/attribute_module.xsd">
+        <bindings node="//xs:attributeGroup[@name='scope-formula.attrib']">
+            <bindings node=".//xs:attribute[@name='scope']">
+                <property name="attributeFormulaScope"/>
+            </bindings>
+        </bindings>
+
+        <bindings node="//xs:attributeGroup[@name='scope-term.attrib']">
+            <bindings node=".//xs:attribute[@name='scope']">
+                <property name="attributeTermScope"/>
+            </bindings>
+        </bindings>
+
+        <bindings node="//xs:attributeGroup[@name='meta.attrib']">
+            <bindings node=".//xs:attribute[@name='meta']">
+                <property name="attributeMeta"/>
+            </bindings>
+        </bindings>
+    </bindings>
+</bindings>

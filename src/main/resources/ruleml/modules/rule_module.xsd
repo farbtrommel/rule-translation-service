@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://ruleml.org/spec" xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/"
+	targetNamespace="http://ruleml.org/spec" elementFormDefault="qualified">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+          
+          Rules module part of Reaction RuleML. It defines the core 
+          Rule construct used as basis for all types of rules in Reaction RuleML
+          
+          This is the XML Schema rule module for Reaction RuleML.
+          File: rule_module.xsd
+          Version: 1.0
+          Last Modification: 2011-03-29
+          
+          This schema declares the following Reaction RuleML elements and attributes:
+          
+          * Rule
+          * on
+          * if
+          * then
+          * do
+          * after 			 			  
+          * else
+          * elseDo
+          * elseAfter			  					  
+          
+		</xs:documentation>
+		
+		<xs:appinfo>
+			<dc:title>Reaction RuleML Schema</dc:title>
+			<dc:version>1.0</dc:version>
+			<dc:creator>Adrian Paschke (paschke AT gmx.de)</dc:creator>
+			<dc:subject>RuleML, custom-built for Reaction RuleML 1.0</dc:subject> 
+			<dc:description>custom-built main module for Reaction RuleML</dc:description> 
+			<dc:date>2011-03-29T23:11:17-0300</dc:date>
+			<dc:language>en</dc:language>
+			<dc:rights>'Copyright 2015 RuleML Inc. -- Licensed under the RuleML Specification License, Version 1.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://ruleml.org/licensing/RSL1.0-RuleML. Disclaimer: THIS SPECIFICATION IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED WARRANTIES, ..., EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. See the License for the specifics governing permissions and limitations under the License.</dc:rights> <dcterms:rights>http://ruleml.org/licensing/RSL1.0-RuleML</dcterms:rights>  
+			 <dc:relation>http://reaction.ruleml.org</dc:relation>
+		</xs:appinfo> 
+	</xs:annotation>
+	
+	<!--
+      *** Rule ***
+      The Rule element that provides the basic syntax for rules
+      in Reaction RuleML.
+      
+      see: http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-Rule
+
+      content model: 
+ 	 
+ 	 In (temporal) DR Reaction RuleML:
+	 ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, ( (else?, then, if) | (if, then, else?)	| (if.content, then.content, then.content?) ) )
+	 
+	 In KR Reaction RuleML:
+	 ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, ( (else?, then, if) | (if, then, else?)))
+	 
+	 In PR Reaction RuleML:
+	 ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, ( (elseDo?, do, if) | (if, do, elseDo?)))
+	 
+	 in ECA Reaction RuleML:
+	 ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (on, (if?, then?, do, after?,else?, elseDo?)? ) )
+	 ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, ( (else?, then, if) | (if, then, else?)	| (if.content, then.content, then.content?) ) )
+
+	 
+	 in CEP Reaction RuleML:
+	 ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (on, (if?, then?, do, after?,else?, elseDo?)* ) )
+	 ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, ( do )
+	 ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, ( (else?, then, if) | (if, then, else?)	| (if.content, then.content, then.content?) ) )
+
+	 
+      Rule has the following attributes:
+		attributes: @type?, @mode?, @arity?, @card?, @minCard?, @maxCard?, @weight?, @style?, @direction?, @scope?, @closure?, @material?, @per?, @meta?, @qualify?, @node?, @iri?, @vocab?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base?
+      
+-->
+	<xs:attributeGroup name="Rule.attlist">
+		<xs:attributeGroup ref="formula-interface.attlist"/>
+		<xs:attributeGroup ref="material.attrib"/>
+		<xs:attributeGroup ref="xml.attlist"/>
+	</xs:attributeGroup>
+	<xs:group name="Rule.content">
+		<xs:sequence>
+			<xs:group ref="meta-roles.content"/>
+			<xs:group ref="rule-implementation.content" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="Rule.type">
+		<xs:group ref="Rule.content"/>
+		<xs:attributeGroup ref="Rule.attlist"/>
+	</xs:complexType>
+	<xs:element name="Rule" type="Rule.type"/>
+
+
+	<!--
+     *** on ***
+     
+     see: http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-on
+     
+     content model: 
+     DR Reaction RuleMl: (  )
+     KR Reaction RuleMl: (Ind | Data | Var | Skolem | Reify  | Expr | Plex | Time | Spatial | Interval | Event | Situation)
+     PR Reaction RuleML: ( )
+     ECA Reaction RuleML: (Event | Action | Sequence | Disjunction | Xor | Conjunction | Concurrent | Not | Any | Aperiodic | Periodic | AtLeast | ATMost | Operator)  
+     CEP Reaction RuleML: (Receive | Answer | Event | Action | Sequence | Disjunction | Xor | Conjunction | Concurrent | Not | Any | Aperiodic | Periodic | AtLeast | ATMost | Operator) 
+     
+     attributes: @index?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base?
+-->
+	<xs:attributeGroup name="on.attlist">
+		<xs:attributeGroup ref="xml.attlist"/>
+		<xs:attributeGroup ref="edge-element.attlist"/>
+	</xs:attributeGroup>
+	<xs:group name="on.content">
+		<xs:choice>
+			<xs:group ref="event_group.content"/>
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="on.type">
+		<xs:group ref="on.content"/>
+		<xs:attributeGroup ref="on.attlist"/>
+	</xs:complexType>
+	<xs:element name="on" type="on.type"/>
+	
+	<!--
+     *** if ***
+     *** after ***
+     
+     see: http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-if
+     see: http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-after
+     
+     content model:   
+     DR Reaction RuleML: (Operator | Atom | And | Or | Equal | Negation | Neg | Naf | Time | Spatial | Interval  )
+     KR Reaction RuleML: (Operator | Atom | And | Or | Equal | Negation | Neg | Naf | Time | Spatial | Interval | Event | Action | Situation )
+     PR Reaction RuleML: (Operator | Atom | And | Or | Equal | Negation | Naf  )    
+     ECA Reaction RuleML: (Operator | Atom | And | Or | Equal | Negation | Neg | Naf | Time | Spatial | Interval | Event | Action )
+	
+	attributes: @index?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base?
+	-->
+	<xs:element name="after" type="if.type"/>
+
+	<!--
+	 *** then ***	
+     *** else ***
+     
+     see: http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-then
+     see: http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-else
+     
+     content model: 
+     DR Reaction RuleML: (  Atom  | Negation | Neg | Equal | Time | Spatial | Interval )
+     KR Reaction RuleML: (  Atom  | Negation | Neg | Equal | Time | Spatial | Interval | Event | Action | Situation )
+     PR Reaction RuleML: not used in PR Reaction RuleML (only in combination with DR)
+     ECA Reaction RuleML: (  Atom  | Negation | Neg | Equal | Time | Spatial | Interval | Event | Action )
+	
+	attributes: @index?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base?
+	-->
+	<xs:element name="else" type="then.type"/>
+	
+	<!--
+     *** do ***
+     *** elseDo ***
+     
+     see: http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-do
+     see: http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-elseDo
+     
+     content model:  
+     DR Reaction RuleML: (  )
+     KR Reaction RuleML: ( Ind | Data | Var | Skolem | Reify  | Expr | Plex | Time | Spatial | Interval | Event | Action | Situation )
+     PR Reaction RuleML: (Action | Assert | Retract | Update | Query | Succession | Choice | Flow | Loop | Operator)
+     ECA Reaction RuleML:  (Action | Assert | Retract | Update | Query | Succession | Choice | Flow | Loop | Operator)
+     CEP Reaction RuleML:  (Send | Consult | Action | Assert | Retract | Update | Query | Succession | Choice | Flow | Loop | Operator)
+
+	attributes: @index?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base?
+	-->
+	<xs:attributeGroup name="do.attlist">
+		<xs:attributeGroup ref="xml.attlist"/>
+		<xs:attributeGroup ref="edge-element.attlist"/>
+	</xs:attributeGroup>
+	<xs:group name="do.content">
+		<xs:choice>
+			<xs:group ref="action_group.content"/>
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="do.type">
+		<xs:group ref="do.content"/>
+		<xs:attributeGroup ref="do.attlist"/>
+	</xs:complexType>
+	<xs:element name="do" type="do.type"/>
+	<xs:element name="elseDo" type="do.type"/>
+	
+	<!--
+  *** Derivation Rule content model ***
+  	((else?, then, if) | (if, then, else?)	| (if.content, then.content, then.content?))
+	-->
+	<xs:group name="DerivationRule.content">
+		<xs:choice>
+			<xs:sequence>
+				<xs:element ref="else" minOccurs="0"/>
+				<xs:element ref="then"/>
+				<xs:element ref="if"/>
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element ref="if"/>
+				<xs:element ref="then"/>
+				<xs:element ref="else" minOccurs="0"/>
+			</xs:sequence>
+			<xs:sequence>
+				<xs:group ref="if.content"/>
+				<xs:group ref="then.content"/>
+				<xs:group ref="then.content" minOccurs="0"/>
+			</xs:sequence>
+		</xs:choice>
+	</xs:group>
+	
+
+	<!--
+   *** Production Rule content model ***
+   ((if, do, elseDo?) | (elseDo?, do, if))
+-->
+	<xs:group name="ProductionRule.content">
+		<xs:choice>
+			<xs:sequence>
+				<xs:element ref="elseDo" minOccurs="0"/>
+				<xs:element ref="do"/>
+				<xs:element ref="if"/>
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element ref="if"/>
+				<xs:element ref="do"/>
+				<xs:element ref="elseDo" minOccurs="0"/>
+			</xs:sequence>
+		</xs:choice>
+		
+	</xs:group>
+	
+	
+	<!--
+   *** Combined DR Production Rule content model ***
+   Production Rule       Derivation Rule    Production Rule with conclusion   inverse Production Rule with conclusion 
+   ((if, do, elseDo?) | (if, then, else) | (if, then?, do, else?, elseDo? ) | ( elseDo?, else?, do, then?, if))
+    -->
+	<xs:group name="DRProductionRule.content">
+		<xs:choice>
+			<xs:sequence>
+				<xs:element ref="elseDo" minOccurs="0"/>
+				<xs:element ref="else" minOccurs="0"/>
+				<xs:element ref="do" />
+				<xs:element ref="then" minOccurs="0"/>
+				<xs:element ref="if"/>
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element ref="if"/>
+				<xs:element ref="then" minOccurs="0"/>
+				<xs:element ref="do" minOccurs="0"/>
+				<xs:element ref="else" minOccurs="0"/>
+				<xs:element ref="elseDo" minOccurs="0"/>
+			</xs:sequence>
+		</xs:choice>
+		
+	</xs:group>
+
+	<!--
+   *** ECA Reaction Rule content model ***
+   (on, (if?, then?, do?, after?,else?, elseDo?)? )
+    -->
+	<xs:group name="ReactionRule.content">
+		<xs:sequence>
+			<xs:element ref="on"/>
+			<xs:choice minOccurs="0">
+				<xs:sequence>
+					<xs:element ref="if" minOccurs="0"/>
+					<xs:element ref="then" minOccurs="0"/>
+					<xs:element ref="do" minOccurs="0"/>
+					<xs:element ref="after" minOccurs="0"/>
+					<xs:element ref="else" minOccurs="0"/>
+					<xs:element ref="elseDo" minOccurs="0"/>
+				</xs:sequence>
+			</xs:choice>
+		</xs:sequence>
+	</xs:group>
+
+	<!--
+   *** CEP Messaging Rule content model ***
+   
+   CEP rules allow arbitrary combinations and repititions of the rule's content model
+   
+   (on | if | then | do | after | else | elseDo)*
+   -->
+	<xs:group name="MessagingRule.content">
+		<xs:sequence>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element ref="on"/>
+				<xs:element ref="if"/>
+				<xs:element ref="then"/>
+				<xs:element ref="do"/>
+				<xs:element ref="after"/>
+				<xs:element ref="else"/>
+				<xs:element ref="elseDo"/>
+			</xs:choice>	
+		</xs:sequence>		
+	</xs:group>
+
+</xs:schema>

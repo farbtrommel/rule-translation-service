@@ -1,0 +1,10 @@
+<Atom>
+    <Rel iri="http://www.w3.org/2003/11/swrlb#greaterThan">greaterThan</Rel>
+    <Var>Var</Var>
+    <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">1.0</Data>
+</Atom>
+<Atom>
+    <Rel iri="http://www.w3.org/2003/11/swrlb#lessThan">lessThan</Rel>
+    <Var>Var</Var>
+    <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">20.0</Data>
+</Atom>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RuleML xmlns="http://ruleml.org/spec">
+<Assert>
+<Rulebase>
+  <oid>
+    <Ind>row-950612891-1</Ind>
+  </oid>
+  <Atom keyref="rule">
+    <Rel>rule</Rel>
+    <Ind>decisionTable</Ind>
+    <Ind>row-950612891-1</Ind>
+    <Ind/>
+    <Ind/>
+  </Atom>
+  <Implies>
+    <meta>
+      <Atom keyref="metaInputEntry">
+        <Rel>metaInputEntry</Rel>
+        <Ind>UnaryTests_0c1o054</Ind>
+        <Ind>Business</Ind>
+      </Atom>
+    </meta>
+    <And>
+      <Atom keyref="inputExpression">
+        <Rel>inputExpression</Rel>
+        <Ind>decisionTable</Ind>
+        <Ind>0</Ind>
+        <Var>Value</Var>
+      </Atom>
+      <Atom>
+        <Rel iri="http://www.w3.org/2003/11/swrlb#equal">equal</Rel>
+        <Var>Value</Var>
+        <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">"Business"</Data>
+      </Atom>
+    </And>
+    <Atom keyref="inputEntry">
+      <Rel>inputEntry</Rel>
+      <Ind>decisionTable</Ind>
+      <Ind>0</Ind>
+      <Ind>0</Ind>
+    </Atom>
+  </Implies>
+  <Implies>
+    <meta>
+      <Atom keyref="metaInputEntry">
+        <Rel>metaInputEntry</Rel>
+        <Ind>UnaryTests_1lod0sz</Ind>
+        <Ind>&lt;10</Ind>
+      </Atom>
+    </meta>
+    <And>
+      <Atom keyref="inputExpression">
+        <Rel>inputExpression</Rel>
+        <Ind>decisionTable</Ind>
+        <Ind>1</Ind>
+        <Var>Value</Var>
+      </Atom>
+      <Atom>
+        <Rel iri="http://www.w3.org/2003/11/swrlb#lessThan">lessThan</Rel>
+        <Var>Value</Var>
+        <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">10.0</Data>
+      </Atom>
+    </And>
+    <Atom keyref="inputEntry">
+      <Rel>inputEntry</Rel>
+      <Ind>decisionTable</Ind>
+      <Ind>1</Ind>
+      <Ind>0</Ind>
+    </Atom>
+  </Implies>
+  <Implies>
+    <meta>
+      <Atom>
+        <Rel iri="http://www.omg.org/spec/DMN/20151101/dmn.xsd#OutputEntry">metaOutputEntry</Rel>
+        <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">LiteralExpression_065u3ym</Data>
+        <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">0.10</Data>
+      </Atom>
+    </meta>
+    <And>
+      <Atom keyref="inputEntry">
+        <Rel>inputEntry</Rel>
+        <Ind>decisionTable</Ind>
+        <Ind>0</Ind>
+        <Ind>0</Ind>
+      </Atom>
+      <Atom keyref="inputEntry">
+        <Rel>inputEntry</Rel>
+        <Ind>decisionTable</Ind>
+        <Ind>1</Ind>
+        <Ind>0</Ind>
+      </Atom>
+      <Equal>
+        <Var>Value</Var>
+        <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">0.1</Data>
+      </Equal>
+    </And>
+    <Atom keyref="outputEntry">
+      <Rel>outputEntry</Rel>
+      <Ind>decisionTable</Ind>
+      <Ind>output1</Ind>
+      <Ind>0</Ind>
+      <Ind>LiteralExpression_065u3ym</Ind>
+      <Var>Value</Var>
+    </Atom>
+  </Implies>
+</Rulebase>
+</Assert>
+</RuleML>

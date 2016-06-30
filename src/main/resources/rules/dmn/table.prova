@@ -1,0 +1,67 @@
+% RuleML
+% Assert
+% Rulebase
+@attr("keyref", "decisionTable") decisionTable("decisionTable", "UNIQUE", "").
+@attr("keyref", "inputClause") @inputClause("input1", "Season", "http://www.omg.org/spec/DMN/20151101/dmn.xsd#string", "input1")
+@attr("keyref", "inputExpression") inputExpression("decisionTable", "0", Value) :- context("input1", Storage0), Value = Storage0.
+@attr("keyref", "inputClause") @inputClause("InputClause_0hmkumv", "How many guests", "http://www.omg.org/spec/DMN/20151101/dmn.xsd#integer", "input2")
+@attr("keyref", "inputExpression") inputExpression("decisionTable", "1", Value) :- context("input2", Storage1), Value = Storage1.
+@attr("keyref", "outputExpression") outputExpression("decisionTable", "output1", "output1", "Dish", "http://www.omg.org/spec/DMN/20151101/dmn.xsd#string").
+% Rulebase
+@rulebase("row-950612891-1")
+@attr("keyref", "rule") rule("decisionTable", "row-950612891-1", "", "").
+@rulebase("row-950612891-1") @attr("keyref", "metaInputEntry") @metaInputEntry("UnaryTests_0c1o054", "Fall")
+@attr("keyref", "inputEntry") inputEntry("decisionTable", "0", "0") :- @attr("keyref", "inputExpression") inputExpression("decisionTable", "0", Value), @attr("iri", "swrlb:equal") equal(Value, "Fall").
+@rulebase("row-950612891-1") @attr("keyref", "metaInputEntry") @metaInputEntry("UnaryTests_1lod0sz", "<=8")
+@attr("keyref", "inputEntry") inputEntry("decisionTable", "1", "0") :- @attr("keyref", "inputExpression") inputExpression("decisionTable", "1", Value), @attr("iri", "swrlb:lessThanOrEqual") lessThanOrEqual(Value, 8.0).
+@rulebase("row-950612891-1") @attr("iri", "dmn:OutputEntry") @metaOutputEntry("LiteralExpression_065u3ym", "Spareribs")
+@attr("keyref", "outputEntry") outputEntry("decisionTable", "output1", "0", "LiteralExpression_065u3ym", Value) :- @attr("keyref", "inputEntry") inputEntry("decisionTable", "0", "0"), @attr("keyref", "inputEntry") inputEntry("decisionTable", "1", "0"), Value = "Spareribs".
+% Rulebase
+@rulebase("row-950612891-2")
+@attr("keyref", "rule") rule("decisionTable", "row-950612891-2", "", "").
+@rulebase("row-950612891-2") @attr("keyref", "metaInputEntry") @metaInputEntry("UnaryTests_0u1z4ho", "Winter")
+@attr("keyref", "inputEntry") inputEntry("decisionTable", "0", "1") :- @attr("keyref", "inputExpression") inputExpression("decisionTable", "0", Value), @attr("iri", "swrlb:equal") equal(Value, "Winter").
+@rulebase("row-950612891-2") @attr("keyref", "metaInputEntry") @metaInputEntry("UnaryTests_1euytqf", "<=8")
+@attr("keyref", "inputEntry") inputEntry("decisionTable", "1", "1") :- @attr("keyref", "inputExpression") inputExpression("decisionTable", "1", Value), @attr("iri", "swrlb:lessThanOrEqual") lessThanOrEqual(Value, 8.0).
+@rulebase("row-950612891-2") @attr("iri", "dmn:OutputEntry") @metaOutputEntry("LiteralExpression_198frve", "Roastbeef")
+@attr("keyref", "outputEntry") outputEntry("decisionTable", "output1", "1", "LiteralExpression_198frve", Value) :- @attr("keyref", "inputEntry") inputEntry("decisionTable", "0", "1"), @attr("keyref", "inputEntry") inputEntry("decisionTable", "1", "1"), Value = "Roastbeef".
+% Rulebase
+@rulebase("row-950612891-3")
+@attr("keyref", "rule") rule("decisionTable", "row-950612891-3", "", "").
+@rulebase("row-950612891-3") @attr("keyref", "metaInputEntry") @metaInputEntry("UnaryTests_1vn9t5c", "Spring")
+@attr("keyref", "inputEntry") inputEntry("decisionTable", "0", "2") :- @attr("keyref", "inputExpression") inputExpression("decisionTable", "0", Value), @attr("iri", "swrlb:equal") equal(Value, "Spring").
+@rulebase("row-950612891-3") @attr("keyref", "metaInputEntry") @metaInputEntry("UnaryTests_1bbbmvu", "<=4")
+@attr("keyref", "inputEntry") inputEntry("decisionTable", "1", "2") :- @attr("keyref", "inputExpression") inputExpression("decisionTable", "1", Value), @attr("iri", "swrlb:lessThanOrEqual") lessThanOrEqual(Value, 4.0).
+@rulebase("row-950612891-3") @attr("iri", "dmn:OutputEntry") @metaOutputEntry("LiteralExpression_1bewepn", "Dry Aged Gourmet Steak")
+@attr("keyref", "outputEntry") outputEntry("decisionTable", "output1", "2", "LiteralExpression_1bewepn", Value) :- @attr("keyref", "inputEntry") inputEntry("decisionTable", "0", "2"), @attr("keyref", "inputEntry") inputEntry("decisionTable", "1", "2"), Value = "Dry Aged Gourmet Steak".
+% Rulebase
+@rulebase("row-950612891-4")
+@attr("keyref", "rule") rule("decisionTable", "row-950612891-4", "", "Save money").
+@rulebase("row-950612891-4") @attr("keyref", "metaInputEntry") @metaInputEntry("UnaryTests_0ogofox", "Spring")
+@attr("keyref", "inputEntry") inputEntry("decisionTable", "0", "3") :- @attr("keyref", "inputExpression") inputExpression("decisionTable", "0", Value), @attr("iri", "swrlb:equal") equal(Value, "Spring").
+@rulebase("row-950612891-4") @attr("keyref", "metaInputEntry") @metaInputEntry("UnaryTests_0c60gjz", "[5..8]")
+@attr("keyref", "inputEntry") inputEntry("decisionTable", "1", "3") :- @attr("keyref", "inputExpression") inputExpression("decisionTable", "1", Value), @attr("iri", "swrlb:greaterThanOrEqual") greaterThanOrEqual(Value, 5.0), @attr("iri", "swrlb:lessThanOrEqual") lessThanOrEqual(Value, 8.0).
+@rulebase("row-950612891-4") @attr("iri", "dmn:OutputEntry") @metaOutputEntry("LiteralExpression_1lahvj7", "Steak")
+@attr("keyref", "outputEntry") outputEntry("decisionTable", "output1", "3", "LiteralExpression_1lahvj7", Value) :- @attr("keyref", "inputEntry") inputEntry("decisionTable", "0", "3"), @attr("keyref", "inputEntry") inputEntry("decisionTable", "1", "3"), Value = "Steak".
+% Rulebase
+@rulebase("row-950612891-5")
+@attr("keyref", "rule") rule("decisionTable", "row-950612891-5", "", "Less effort").
+@rulebase("row-950612891-5") @attr("keyref", "metaInputEntry") @metaInputEntry("UnaryTests_1774yme", "Fall")
+@attr("keyref", "inputEntry") inputEntry("decisionTable", "0", "4") :- @attr("keyref", "inputExpression") inputExpression("decisionTable", "0", Value), @attr("iri", "swrlb:equal") equal(Value, "Fall").
+@rulebase("row-950612891-5") @attr("keyref", "metaInputEntry") @metaInputEntry("UnaryTests_1774yme", "Winter")
+@attr("keyref", "inputEntry") inputEntry("decisionTable", "0", "4") :- @attr("keyref", "inputExpression") inputExpression("decisionTable", "0", Value), @attr("iri", "swrlb:equal") equal(Value, "Winter").
+@rulebase("row-950612891-5") @attr("keyref", "metaInputEntry") @metaInputEntry("UnaryTests_1774yme", "Spring")
+@attr("keyref", "inputEntry") inputEntry("decisionTable", "0", "4") :- @attr("keyref", "inputExpression") inputExpression("decisionTable", "0", Value), @attr("iri", "swrlb:equal") equal(Value, "Spring").
+@rulebase("row-950612891-5") @attr("keyref", "metaInputEntry") @metaInputEntry("UnaryTests_01rn17i", ">8")
+@attr("keyref", "inputEntry") inputEntry("decisionTable", "1", "4") :- @attr("keyref", "inputExpression") inputExpression("decisionTable", "1", Value), @attr("iri", "swrlb:greaterThan") greaterThan(Value, 8.0).
+@rulebase("row-950612891-5") @attr("iri", "dmn:OutputEntry") @metaOutputEntry("LiteralExpression_0jpd7hr", "Stew")
+@attr("keyref", "outputEntry") outputEntry("decisionTable", "output1", "4", "LiteralExpression_0jpd7hr", Value) :- @attr("keyref", "inputEntry") inputEntry("decisionTable", "0", "4"), @attr("keyref", "inputEntry") inputEntry("decisionTable", "1", "4"), Value = "Stew".
+% Rulebase
+@rulebase("row-950612891-6")
+@attr("keyref", "rule") rule("decisionTable", "row-950612891-6", "", "Hey, why not!?").
+@rulebase("row-950612891-6") @attr("keyref", "metaInputEntry") @metaInputEntry("UnaryTests_0ifdx8k", "Summer")
+@attr("keyref", "inputEntry") inputEntry("decisionTable", "0", "5") :- @attr("keyref", "inputExpression") inputExpression("decisionTable", "0", Value), @attr("iri", "swrlb:equal") equal(Value, "Summer").
+@rulebase("row-950612891-6") @attr("keyref", "metaInputEntry") @metaInputEntry("UnaryTests_0c8ym7l", "-")
+@attr("keyref", "inputEntry") inputEntry("decisionTable", "1", "5") :- @attr("keyref", "inputExpression") inputExpression("decisionTable", "1", Value).
+@rulebase("row-950612891-6") @attr("iri", "dmn:OutputEntry") @metaOutputEntry("LiteralExpression_08d4mb6", "Light Salad and a nice Steak")
+@attr("keyref", "outputEntry") outputEntry("decisionTable", "output1", "5", "LiteralExpression_08d4mb6", Value) :- @attr("keyref", "inputEntry") inputEntry("decisionTable", "0", "5"), @attr("keyref", "inputEntry") inputEntry("decisionTable", "1", "5"), Value = "Light Salad and a nice Steak".

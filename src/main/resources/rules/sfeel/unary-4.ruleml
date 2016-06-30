@@ -1,0 +1,10 @@
+<Atom>
+    <Rel>context</Rel>
+    <Ind>foo</Ind>
+    <Var>Storage0</Var>
+</Atom>
+<Atom>
+    <Rel iri="http://www.w3.org/2003/11/swrlb#equal">equal</Rel>
+    <Var>Var</Var>
+    <Var>Storage0</Var>
+</Atom>

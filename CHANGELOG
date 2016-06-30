@@ -1,0 +1,12 @@
+Changelog of Rule Translation Service
+
+RTS 0.1.0
+
+* Rename RuleTranslator to RuleTranslation
+* DMN Decision table: Set default value by decision table id and output id.
+* DMN S-FEEL: Fixed arithmetic expression.
+
+RTS 0.0.9
+
+* Service can translate from x to y, where x and y are not RuleML.
+* Add Prova support.

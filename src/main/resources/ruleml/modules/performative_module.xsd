@@ -1,0 +1,474 @@
+<?xml version="1.0"?>
+
+<xs:schema targetNamespace="http://ruleml.org/spec" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns="http://ruleml.org/spec" elementFormDefault="qualified">
+
+  <!-- note that elementFormDefault is qualified because of local declarations -->
+
+  <xs:annotation>
+    <xs:documentation xml:lang="en"> This is the XML Schema module for RuleML performatives. File:
+      performative_module.xsd Version: 1.0 Last Modification: 2011-09-26 This module declares the
+      following RuleML elements: * RuleML * Assert * Retract * Query * act * formula See
+      http://www.ruleml.org/modularization for details about this modularization approach.
+    </xs:documentation>
+    
+    <xs:appinfo>
+      <dc:title>RuleML Schema</dc:title>
+      <dc:version>1.0</dc:version>
+      <dc:creator>Adrian Paschke (paschke AT gmx.de)</dc:creator>
+      <dc:creator>Tara Athan (taraathan AT gmail.com)</dc:creator>
+      <dc:subject>RuleML, custom-built for Reaction RuleML 1.0</dc:subject> 
+      <dc:description>custom-built main module for Reaction RuleML</dc:description> 
+      <dc:date>2011-09-26T23:11:17-0300</dc:date>
+      <dc:language>en</dc:language>
+      <dc:rights>'Copyright 2015 RuleML Inc. -- Licensed under the RuleML Specification License, Version 1.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://ruleml.org/licensing/RSL1.0-RuleML. Disclaimer: THIS SPECIFICATION IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED WARRANTIES, ..., EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. See the License for the specifics governing permissions and limitations under the License.</dc:rights> <dcterms:rights>http://ruleml.org/licensing/RSL1.0-RuleML</dcterms:rights>  
+       <dc:relation>http://reaction.ruleml.org</dc:relation>
+    </xs:appinfo>  
+  </xs:annotation>
+
+  <!--
+		*** RuleML ***
+		The n-ary top-level of a RuleML document.
+		
+		See http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-RuleML
+			 
+	DR/KR Reaction RuleML ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (act | Consult|Assert|Retract|Query|Answer|Test)* )
+	PR Reaction RuleML ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (act | Assert|Retract|Update|Consult|Query|Answer|Test|Action)* )
+	ECA Reaction RuleML ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (act | Assert|Retract|Update|Query|Consult|Answer|Test|Action)* )
+	CEP Reaction RuleML ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (act|Assert|Retract|Update|Query|Answer|Send|Receive|Consult|Test|Action)* )
+			
+ 	 Note: key and keyref object identifier are defined to be unique under the RuleML document root
+ 	 
+ 	 @vocab: an IRI that defines the mapping to use when a type term (e.g. a frame signature type) is referenced in an attribute value
+ 	 @prefix: a white space separated list of prefix-name IRI pairs of the form NCName ':' ' '+ xsd:anyURI
+				
+	attributes: @meta?, @qualify?, @node?, @iri?, @vocab?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base?
+	-->
+  <xs:attributeGroup name="RuleML.attlist">
+    <xs:attributeGroup ref="node-element.attlist"/>
+    <xs:attributeGroup ref="xml.attlist"/>
+  </xs:attributeGroup>
+  <xs:group name="RuleML.content">
+    <xs:sequence>
+      <xs:group ref="meta-roles.content"/>     
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="act"/>
+        <xs:group ref="act.content"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:group>
+  <xs:complexType name="RuleML.type">
+    <xs:group ref="RuleML.content"/>
+    <xs:attributeGroup ref="RuleML.attlist"/>
+  </xs:complexType>
+  
+  <xs:element name="RuleML" type="RuleML.type">
+    <!-- key object identifiers and key object references defined on the top level -->
+    <xs:unique name="keyOID">
+      <xs:selector xpath=".//*"/>
+      <xs:field xpath="@key"/>
+    </xs:unique>
+    <xs:keyref name="keyOIDref" refer="keyOID">
+      <xs:selector xpath=".//*"/>
+      <xs:field xpath="@keyref"/>
+    </xs:keyref> 
+  </xs:element>
+  
+  <!--
+    *** act ***
+    The act role of the root element (<RuleML>).
+    
+    See http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-act
+    
+    content model  
+    DR/KR Reaction RuleML (Consult|Assert|Retract|Query|Answer|Test)
+    PR Reaction RuleML (Assert|Retract|Update|Consult|Query|Answer|Test|Action)
+    ECA Reaction RuleML (Assert|Retract|Update|Query|Consult|Answer|Test|Action)
+    CEP Reaction RuleML (Assert|Retract|Update|Query|Answer|Send|Receive|Consult|Test|Action)
+    
+    attributes: @index?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base?
+  -->
+  <xs:group name="act.content">
+    <xs:choice>
+      <xs:group ref="performative_primitives.content"/>
+    </xs:choice>
+  </xs:group>
+  <xs:attributeGroup name="act.attlist">
+    <xs:attributeGroup ref="edge-element.attlist"/>
+    <xs:attributeGroup ref="xml.attlist"/>
+  </xs:attributeGroup>
+  <xs:complexType name="act.type">
+    <xs:group ref="act.content"/>
+    <xs:attributeGroup ref="act.attlist"/>
+  </xs:complexType>
+  <xs:element name="act" type="act.type"/>
+
+  <!--
+      *** Consult ***
+      Consult (import) performative / action 
+      
+      see: http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-Consult
+      
+      dynamically "consults" (imports) knowledge resource, e.g. a message, documents or external resource (with the @iri attribute).
+      
+      content model:
+ 		 
+ 		 in DR Reaction RuleML (meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (payload | RuleML | Reify | Var))
+ 		 in KR Reaction RuleML (meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (payload | RuleML | Reify | Var))
+ 		 in PR Reaction RuleML  (meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (payload | RuleML | Reify | Var))
+ 		 in ECA Reaction RuleML (meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (payload | RuleML | Reify | Var))
+	   in CEP Reaction RuleML ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, ((payload | RuleML | Reify | Var) | (enclosed | Message))* )
+	  
+      Consult has the following attributes:
+      attributes: @type?, @mode?, @arity?, @card?, @minCard?, @maxCard?, @weight?, @style?, @direction?, @safety?, @scope?, @closure?, @per?, @meta?, @qualify?, @node?, @iri?, @vocab?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base? 
+
+    -->
+  <xs:attributeGroup name="Consult.attlist">
+    <xs:attributeGroup ref="action-interface.attlist"/>
+    <xs:attributeGroup ref="node-element.attlist"/>
+    <xs:attributeGroup ref="xml.attlist"/>
+  </xs:attributeGroup>
+  <xs:group name="Consult.content">
+    <xs:sequence>
+      <xs:group ref="meta-roles.content"/>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:group ref="consult_imports.content"/>
+      </xs:choice>				
+    </xs:sequence>			
+  </xs:group>
+  <xs:complexType name="Consult.type">
+    <xs:group ref="Consult.content"/>
+    <xs:attributeGroup ref="Consult.attlist"/>
+  </xs:complexType>
+  <xs:element name="Consult" type="Consult.type"/>
+
+  <!--
+     *** payload ***
+     
+    see: http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-payload
+     
+     content model: (RuleML | Reify | Var)
+     
+     attributes:  @prefix?, @key?, @keyref?, @xml:id?, @xml:base?
+	-->
+  <xs:attributeGroup name="payload.attlist">
+    <xs:attributeGroup ref="xml.attlist"/>
+  </xs:attributeGroup>
+  <xs:group name="payload.content">
+    <xs:choice>
+      <xs:element ref="RuleML"/> <!-- a RuleML knowledge base -->
+      <xs:element ref="Reify"/> <!-- reified knowledge as payload -->
+      <xs:element ref="Var"/> <!-- for  binding knowledge to variables in meta programming -->
+    </xs:choice>
+  </xs:group>
+  <xs:complexType name="payload.type">
+    <xs:group ref="payload.content"/>
+    <xs:attributeGroup ref="payload.attlist"/>
+  </xs:complexType>
+  <xs:element name="payload" type="payload.type"/>
+
+  <!--
+		*** Assert ***
+		A KQML-like performative acting as a wrapper specifying that its content is
+		asserted, making an 'implicit <Rulebase>' assumption.
+
+		see: http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-Assert 
+
+		content model:
+		DR Reaction RuleMl: (meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?,  (formula | Operator | Rulebase | Atom | Rule | Implies | Equivalent | Entails | Forall |  Equal | Negation | Neg | Time | Spatial | Interval  )*)
+    KR Reaction RuleMl: (meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?,  (formula | Operator | Rulebase | Atom | Rule | Implies | Equivalent | Entails | Forall |  Equal | Negation | Neg | Time | Spatial | Interval | Event | Action | Situation | Holds | Initiates | Terminates | Happens )*)
+    PR Reaction RuleML: (meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?,  (formula | Operator | Rulebase | Atom | Rule | Implies | Equivalent | Entails | Forall |  Equal )*) 
+    ECA Reaction RuleMl: (meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?,  (formula | Operator | Rulebase | Atom | Rule | Implies | Equivalent | Entails | Forall | Equal | Negation | Neg | Time | Spatial | Interval | Event | Action  )*)
+
+   attributes: @type?, @mode?, @arity?, @card?, @minCard?, @maxCard?, @weight?, @style?, @direction?, @safety?, @scope?, @closure?, @per?, @meta?, @qualify?, @node?, @iri?, @vocab?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base?  
+  -->
+  <xs:attributeGroup name="Assert.attlist">
+    <xs:attributeGroup ref="action-interface.attlist"/>
+    <xs:attributeGroup ref="node-element.attlist"/>
+    <xs:attributeGroup ref="xml.attlist"/>  
+  </xs:attributeGroup>
+  <xs:group name="Assert.content">
+    <xs:sequence>
+      <xs:group ref="meta-roles.content"/>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="formula" type="formula-assert.type"/>
+        <xs:group ref="formula-assert.content"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:group>
+  <xs:complexType name="Assert.type">
+    <xs:group ref="Assert.content"/>
+    <xs:attributeGroup ref="Assert.attlist"/>
+  </xs:complexType>
+  <xs:element name="Assert" type="Assert.type"/>
+
+  <!--
+		*** Retract ***
+		A performative similar to KQML's 'untell' that acts as a wrapper specifying that its
+		content is to be deleted, making an 'implicit <Rulebase>' assumption.
+
+		See http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-Retract
+
+		content model:
+		DR Reaction RuleMl: (meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?,  (formula | Operator | Rulebase | Atom | Rule | Implies | Equivalent | Entails | Forall |  Equal | Negation | Neg | Time | Spatial | Interval  )*)
+    KR Reaction RuleMl: (meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?,  (formula | Operator | Rulebase | Atom | Rule | Implies | Equivalent | Entails | Forall |  Equal | Negation | Neg | Time | Spatial | Interval | Event | Action | Situation | Holds | Initiates | Terminates | Happens )*)
+    PR Reaction RuleML: (meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?,  (formula | Operator | Rulebase | Atom | Rule | Implies | Equivalent | Entails | Forall | Equal )*) 
+ 		ECA Reaction RuleMl: (meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?,  (formula | Operator | Rulebase | Atom | Rule | Implies | Equivalent | Entails |  Forall | Equal | Negation | Neg | Time | Spatial | Interval | Event | Action  )*)   
+
+    attributes: @type?, @mode?, @arity?, @card?, @minCard?, @maxCard?, @weight?, @style?, @direction?, @safety?, @scope?, @closure?, @per?, @meta?, @qualify?, @node?, @iri?, @vocab?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base?   
+  -->
+  <xs:attributeGroup name="Retract.attlist">
+    <xs:attributeGroup ref="action-interface.attlist"/>
+    <xs:attributeGroup ref="node-element.attlist"/>
+    <xs:attributeGroup ref="xml.attlist"/>      
+  </xs:attributeGroup>
+  <xs:group name="Retract.content">
+    <xs:sequence>
+      <xs:group ref="meta-roles.content"/>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="formula" type="formula-assert.type"/>
+        <xs:group ref="formula-assert.content"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:group>
+  <xs:complexType name="Retract.type">
+    <xs:group ref="Retract.content"/>
+    <xs:attributeGroup ref="Retract.attlist"/>
+  </xs:complexType>
+  <xs:element name="Retract" type="Retract.type"/>
+  
+  <!--
+      *** Update ***
+      Update action
+      
+      See http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-Update
+      
+      content model:
+      
+      in PR Reaction RuleML
+       ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (formula | Operator | Forall | Rulebase | Atom | Rule | Implies | Equivalent | Entails | Equal),
+		 (formula | Operator | Forall | Rulebase | Atom | Rule | Implies | Equivalent | Entails | Equal)? )
+		 
+	  in ECA / CEP Reaction RuleML
+	  ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (formula | Operator | Forall | Rulebase | Atom | Rule | Implies | Equivalent | Entails | Equal |  Negation | Neg | Time | Spatial | Interval | Event | Action),
+		 (formula | Operator | Forall | Rulebase | Atom | Rule | Implies | Equivalent | Entails | Equal |  Negation | Neg | Time | Spatial | Interval | Event | Action)? )
+	  
+      Update has the following attributes:
+      @type?, @mode?, @arity?, @card?, @minCard?, @maxCard?, @weight?, @style?, @direction?, @safety?, @scope?, @closure?, @per?, @meta?, @qualify?, @node?, @iri?, @vocab?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base? 
+      
+-->
+  <xs:attributeGroup name="Update.attlist">
+    <xs:attributeGroup ref="action-interface.attlist"/>
+    <xs:attributeGroup ref="node-element.attlist"/>
+    <xs:attributeGroup ref="xml.attlist"/>
+  </xs:attributeGroup>
+  <xs:group name="Update.content">
+    <xs:sequence>
+      <xs:group ref="meta-roles.content"/>
+      <xs:sequence>
+        <xs:choice>
+          <xs:element name="formula" type="formula-assert.type"/>
+          <xs:group ref="formula-assert.content"/>
+        </xs:choice>
+        <xs:choice minOccurs="0">
+          <xs:element name="formula" type="formula-assert.type"/>
+          <xs:group ref="formula-assert.content"/>
+        </xs:choice>
+      </xs:sequence>	
+    </xs:sequence>			
+  </xs:group>
+  <xs:complexType name="Update.type">
+    <xs:group ref="Update.content"/>
+    <xs:attributeGroup ref="Update.attlist"/>
+  </xs:complexType>
+  <xs:element name="Update" type="Update.type"/>
+
+  <!--
+		*** Query ***
+		A KQML-like performative acting as a wrapper specifying that its content is
+		queried, making an 'implicit <Rulebase>' assumption.
+		
+		See http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-Query
+
+		content model:
+		DR Reaction RuleML: ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?,  (formula | Operator | Atom | Rulebase | And | Or | Entails | Exists |  Equal | Negation | Neg | Naf | Time | Spatial | Interval )* )
+		KR Reaction RuleML: ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?,  (formula | Operator | Atom | Rulebase | And | Or | Entails | Exists |  Equal | Negation | Neg | Naf | Time | Spatial | Interval | Event | Action | Situation | Holds | Initiates | Terminates | Happens )* )
+		PR Reaction RuleML:( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?,  (formula | Operator | Rulebase | Atom | Entails | Exists | And | Or | Negation | Naf | Equal | Action )* )
+		ECA Reaction RuleML: ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?,  (formula | Operator | Atom | Rulebase | And | Or | Entails | Exists |  Equal | Negation | Neg | Naf | Time | Spatial | Interval | Event | Action )* )		
+
+    attributes: @type?, @mode?, @arity?, @card?, @minCard?, @maxCard?, @weight?, @style?, @direction?, @safety?, @scope?, @closure?, @per?, @meta?, @qualify?, @node?, @iri?, @vocab?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base?
+  -->
+  <xs:attributeGroup name="Query.attlist">
+    <xs:attributeGroup ref="action-interface.attlist"/>
+    <xs:attributeGroup ref="node-element.attlist"/>
+    <xs:attributeGroup ref="xml.attlist"/>
+  </xs:attributeGroup>
+  <xs:group name="Query.content">
+    <xs:sequence>
+      <xs:group ref="meta-roles.content"/> 
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="formula" type="formula-query.type"/>
+        <xs:group ref="formula-query.content"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:group>
+  <xs:complexType name="Query.type">
+    <xs:group ref="Query.content"/>
+    <xs:attributeGroup ref="Query.attlist"/>
+  </xs:complexType>
+  <xs:element name="Query" type="Query.type"/>
+
+  <!--
+      *** Answer ***
+      Answer performative / action 
+      
+      see: http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-Answer
+      
+      It delivers the answer to a Query . The answer is given in terms of solved formulas, e.g.
+      
+      as a <Rulebase> that contains just 'solved' equations with the variable bindings
+      
+	  <Rulebase>
+  		<Equal><Var>x</Var><Ind>a</Ind></Equal>
+  		<Equal><Var>y</Var><Ind>b</Ind></Equal>
+  		<Equal><Var>z</Var><Ind>c</Ind></Equal>
+	  </Rulebase>
+	  
+	  as ground fact <Atom> matching the query / goal 
+	  
+	  <Atom>
+	  	<Rel>p</Rel>
+	  	<Ind>a</Ind>
+	  	<Ind>b</Ind>
+	  	<Ind>c</Ind>
+	  </Atom>
+	  
+	  as solved ground entailments <Entails> of the answer from the queried (ground or instantiated / forward chained) rule base  
+	  
+	  With the optional <degree> role a truth/uncertainty value (between 0.0 and 1.0; 
+	  with the truth values "1" for true and "0" for false in two-valued logics and "0.5" for unknown in three-valued logics) can be assigned to the answer. 
+	  
+	  An answer maybe be also just referenced by the local @key-@keyref mechanism  
+	  or by the optional @iri attribute, in case of externally published answers. 
+	  
+	  With the optional @type attribute an answer type can be specified. 
+	  The @safety optionally defines if the answer (event) is interrupting or non-interrupting 
+	  and the @card attribute optionally defines the number of results contained in an Answer.
+	   
+	  
+      content model:
+ 		 
+	  in CEP Reaction RuleML
+	  ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, degree? (formula | Operator | Rulebase | Atom | Entails | And | Or | Equal | Negation | Naf | Neg | Time | Spatial | Interval | Event | Action)* )
+	  
+      Answer has the following attributes:
+    attributes: @type?, @mode?, @arity?, @card?, @minCard?, @maxCard?, @weight?, @style?, @direction?, @safety?, @scope?, @closure?, @per?, @meta?, @qualify?, @node?, @iri?, @vocab?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base?
+    -->
+  <xs:attributeGroup name="Answer.attlist">		
+    <xs:attributeGroup ref="action-interface.attlist"/>
+    <xs:attributeGroup ref="node-element.attlist"/>
+    <xs:attributeGroup ref="xml.attlist"/>
+  </xs:attributeGroup>
+  <xs:group name="Answer.content">
+    <xs:sequence>
+      <xs:group ref="meta-roles.content"/>
+      <xs:element ref="degree" minOccurs="0"/>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="formula" type="formula-answer.type"/>
+        <xs:group ref="formula-answer.content"/>
+      </xs:choice>		
+    </xs:sequence>			
+  </xs:group>
+  <xs:complexType name="Answer.type">
+    <xs:group ref="Answer.content"/>
+    <xs:attributeGroup ref="Answer.attlist"/>
+  </xs:complexType>
+  <xs:element name="Answer" type="Answer.type"/>
+  
+  <!--
+		*** formula ***
+		The formula role of a performative (<Answer>).
+		
+      see: http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-formula
+		
+		content model (below Answer formula): 
+		(Operator | Rulebase | Atom | Entails | And | Or | Equal | Negation | Naf | Neg | Time | Spatial | Interval | Event | Action)
+  		
+		Other (context-sensitive) versions of <formula> are in the
+		connective and quantifier modules.
+		
+		attributes: @index?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base?
+	-->
+  
+  <xs:group name="formula-answer.content">
+    <xs:choice>
+      <xs:element ref="Rulebase"/>
+      <xs:element ref="Entails"/>
+      <xs:group ref="query-connective.content"/>
+      <xs:group ref="query-quantifier.content"/>
+      <xs:group ref="extended-signature-predicate-sorts.content"/>
+    </xs:choice>
+  </xs:group>
+  <xs:complexType name="formula-answer.type">
+    <xs:group ref="formula-answer.content"/>
+    <xs:attributeGroup ref="formula.attlist"/>
+  </xs:complexType>
+
+  <!--
+		*** formula ***
+		The formula role of a performative (<Assert>, <Retract>, <Update>,... or <Query>).
+
+		See http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-formula
+
+		content model (below Assert formula): 
+		DR Reaction RuleML (Operator | Rulebase | Atom | Implies | Rule | Equivalent | Entails | Equal | Negation | Neg | Forall |  Time | Spatial | Interval )
+		KR Reaction RuleML (Operator | Rulebase | Atom | Implies | Rule | Equivalent | Entails | Equal | Negation | Neg | Forall |  Time | Spatial | Interval  | Event | Action | Situation | Holds | Initiates | Terminates | Happens )
+		PR Reaction RuleML (Operator | Rulebase | Atom | Implies | Rule | Equivalent | Entails | Equal | Forall )
+		ECA Reaction RuleML (Operator | Rulebase | Atom | Implies | Rule | Equivalent | Entails | Equal | Negation | Neg |  Time | Spatial | Interval | Event | Action | Forall )
+		CEP Reaction RuleML  (Operator | Rulebase | Atom |Implies | Rule | Equivalent | Entails | Equal |  Negation | Neg | Time | Spatial | Interval | Event | Action | Forall )
+		
+		content model (below Query): 
+		DR Reaction RuleML (Operator | Rulebase | Atom | Entails | And | Or | Equal | Negation | Naf | Neg | Exists |  Time | Spatial | Interval )
+		KR Reaction RuleML (Operator | Rulebase | Atom | Entails | And | Or | Equal | Negation | Naf | Neg | Exists |  Time | Spatial | Interval | Event | Action | Situation | Holds | Initiates | Terminates | Happens )
+    PR Reaction RuleML (Operator | Rulebase | Atom | Entails | And | Or | Negation | Naf | Equal | Action )
+		ECA Reaction RuleML (Operator | Rulebase | Atom | Entails | And | Or | Equal | Negation | Naf | Neg | Time | Spatial | Interval | Event | Action )    
+		CEP Reaction RuleML (Operator | Atom | Rulebase | And | Or | Entails |  Equal | Negation | Neg | Naf | Time | Spatial | Interval | Event | Action  )
+
+		Other (context-sensitive) versions of <formula> are in the
+		connective and quantifier modules.
+		
+		attributes: @index?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base?
+	-->
+  <!-- the (empty) attribute list is declared in the connective module -->
+  <xs:group name="formula-assert.content">
+    <xs:choice>
+      <xs:element ref="Rulebase"/>
+      <xs:element ref="Implies"/>
+      <xs:element ref="Rule"/>	
+      <xs:element ref="Equivalent"/>
+      <xs:element ref="Entails"/>
+      <xs:group ref="outer-quantifier.content"/>
+      <xs:group ref="outer-connective.content"/>
+      <xs:group ref="extended-signature-predicate-sorts.content"/>
+    </xs:choice>
+  </xs:group>
+  <xs:group name="formula-query.content">
+    <xs:choice>
+      <xs:element ref="Rulebase"/>
+      <xs:element ref="Entails"/>
+      <xs:group ref="query-connective.content"/>
+      <xs:group ref="query-quantifier.content"/>
+      <xs:group ref="extended-signature-predicate-sorts.content"/>
+    </xs:choice>
+  </xs:group>
+  <xs:complexType name="formula-assert.type">
+    <xs:group ref="formula-assert.content"/>
+    <xs:attributeGroup ref="formula.attlist"/>
+  </xs:complexType>
+  <xs:complexType name="formula-query.type">
+    <xs:group ref="formula-query.content"/>
+    <xs:attributeGroup ref="formula.attlist"/>
+  </xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,11 @@
+%RuleML
+%Assert
+% Rulebase
+@rulebase("row-950612891-1")
+@attr("keyref", "rule") rule("decisionTable", "row-950612891-1", "", "").
+@rulebase("row-950612891-1") @attr("keyref", "metaInputEntry") @metaInputEntry("UnaryTests_0c1o054", "Business")
+@attr("keyref", "inputEntry") inputEntry("decisionTable", "0", "0") :- @attr("keyref", "inputExpression") inputExpression("decisionTable", "0", Value), equal(Value, "Business").
+@rulebase("row-950612891-1") @attr("keyref", "metaInputEntry") @metaInputEntry("UnaryTests_1lod0sz", "<10")
+@attr("keyref", "inputEntry") inputEntry("decisionTable", "1", "0") :- @attr("keyref", "inputExpression") inputExpression("decisionTable", "1", Value), lessThan(Value, 10.0).
+@rulebase("row-950612891-1") @metaOutputEntry("LiteralExpression_065u3ym", "0.10")
+@attr("keyref", "outputEntry") outputEntry("decisionTable", "output1", "0", "LiteralExpression_065u3ym", Value) :- @attr("keyref", "inputEntry") inputEntry("decisionTable", "0", "0"), @attr("keyref", "inputEntry") inputEntry("decisionTable", "1", "0"), Value = 0.1.

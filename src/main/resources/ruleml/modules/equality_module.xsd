@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+
+<xs:schema targetNamespace="http://ruleml.org/spec" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns="http://ruleml.org/spec">
+
+  <xs:annotation>
+    <xs:documentation xml:lang="en"> This is the XML Schema module for equality in RuleML. File:
+      equality_module.xsd Version: 1.0 Last Modification: 2012-02-21 [Tara Athan] This module
+      declares the following RuleML elements and attributes: * Equal * left * right 
+      See http://www.ruleml.org/modularization for details about this modularization approach. </xs:documentation>
+
+    
+    <xs:appinfo>
+      <dc:title>RuleML Schema</dc:title>
+      <dc:version>1.0</dc:version>
+      <dc:creator>Tara Athan (taraathan AT gmail.com)</dc:creator>
+      <dc:creator>Adrian Paschke (paschke AT gmx.de)</dc:creator>
+      <dc:subject>RuleML, custom-built for Reaction RuleML 1.0</dc:subject> 
+      <dc:description>custom-built main module for Reaction RuleML</dc:description> 
+      <dc:date>2012-02-21T23:11:17-0300</dc:date>
+      <dc:language>en</dc:language>
+      <dc:rights>'Copyright 2015 RuleML Inc. -- Licensed under the RuleML Specification License, Version 1.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://ruleml.org/licensing/RSL1.0-RuleML. Disclaimer: THIS SPECIFICATION IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED WARRANTIES, ..., EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. See the License for the specifics governing permissions and limitations under the License.</dc:rights> <dcterms:rights>http://ruleml.org/licensing/RSL1.0-RuleML</dcterms:rights>  
+       <dc:relation>http://reaction.ruleml.org</dc:relation>
+    </xs:appinfo> 
+
+  </xs:annotation>
+
+  <!--
+		*** Equal ***
+		An equational formula consisting of two expressions.
+
+		See http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-Equal
+
+		content model:
+		in DR Reaction RuleML:
+		(
+		  meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (degree)?
+			(left, right) |
+			(  (Ind | Data | Var | Skolem | Reify  | Expr | Plex | Time | Spatial | Interval), (Ind | Data | Var | Skolem | Reify  | Expr | Plex | Time | Spatial | Interval)  )
+		)
+		in KR Reaction RuleML:
+		(
+		  meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (degree)?,
+			(left, right) |
+			(  (Ind | Data | Var | Skolem | Reify  | Expr | Plex | Time | Spatial | Interval | Event | Action | Situation), (Ind | Data | Var | Skolem | Reify  | Expr | Plex | Time | Spatial | Interval | Event | Action | Situation)  )
+		)
+		in PR Reaction RuleML:  (meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (degree)?,	(left, right) |	( (Ind | Data | Var | Skolem | Reify  | Expr | Plex ), (Ind | Data | Var | Skolem | Reify  | Expr | Plex ) ))
+		in ECA Reaction RuleML:	(meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (degree)?,	(left, right) |	(  (Ind | Data | Var | Skolem | Reify  | Expr | Plex | Time | Spatial | Interval | Event | Action), (Ind | Data | Var | Skolem | Reify  | Expr | Plex | Time | Spatial | Interval | Event | Action)  )
+		)		
+		
+		attributes: @oriented?, @type?, @mode?, @arity?, @card?, @minCard?, @maxCard?, @weight?, @style?, @direction?, @scope?, @closure?, @per?, @meta?, @qualify?, @node?, @iri?, @vocab?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base?
+	-->
+  <xs:attributeGroup name="Equal.attlist">
+    <xs:attributeGroup ref="oriented.attrib"/>
+    <xs:attributeGroup ref="formula-interface.attlist"/>
+    <xs:attributeGroup ref="node-element.attlist"/>
+    <xs:attributeGroup ref="xml.attlist"/>
+  </xs:attributeGroup>
+  <xs:group name="Equal.content">
+    <xs:sequence>
+      <xs:group ref="meta-roles.content"/>
+      <xs:element ref="degree" minOccurs="0"/>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="left"/>
+          <xs:element ref="right"/>
+        </xs:sequence>
+        <!-- note that (right, left) is disallowed -->
+        <xs:sequence>
+          <xs:group ref="left.content"/>
+          <xs:group ref="right.content"/>
+        </xs:sequence>
+      </xs:choice>
+    </xs:sequence>
+  </xs:group>
+  <xs:complexType name="Equal.type">
+
+    <!-- 
+			<xs:annotation>
+			<xs:appinfo>
+				<sch:pattern name="Defining equality">
+					<sch:rule context=
+						"r:Implies/r:then/r:Equal/r:left/r:Expr/r:Fun |
+						 r:Implies/r:Equal[2]/r:left/r:Expr/r:Fun |
+						 r:Implies/r:then/r:Equal/r:Expr[1]/r:Fun |
+						 r:Implies/r:Equal[2]/r:Expr[1]/r:Fun">
+						<sch:assert test="@per='yes'">
+							A defining equality must have an interpreted left-hand side.
+						</sch:assert>
+					</sch:rule>
+				</sch:pattern>
+			</xs:appinfo>
+		</xs:annotation>
+		-->
+
+    <xs:group ref="Equal.content"/>
+    <xs:attributeGroup ref="Equal.attlist"/>
+  </xs:complexType>
+  <xs:element name="Equal" type="Equal.type"/>
+
+  <!--
+		*** left ***
+		The left-hand side of an equational formula.
+
+		See http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-left
+
+		content model: 
+		in DR Reaction RuleML (Ind | Data | Var | Skolem | Reify  | Expr | Plex | Time | Spatial | Interval)
+		in KR Reaction RuleML (Ind | Data | Var | Skolem | Reify  | Expr | Plex | Time | Spatial | Interval | Event | Action | Situation)
+		in PR Reaction RuleML (Ind | Data | Var | Skolem | Reify  | Expr | Plex )
+		in ECA Reaction RuleML (Ind | Data | Var | Skolem | Reify  | Expr | Plex | Time | Spatial | Interval | Event | Action)
+		
+		attributes: @prefix?, @key?, @keyref?, @xml:id?, @xml:base?
+	
+	-->
+  <xs:attributeGroup name="left.attlist">
+    <xs:attributeGroup ref="xml.attlist"/>
+  </xs:attributeGroup>
+  <xs:group name="left.content">
+    <xs:choice>
+      <xs:group ref="arg.content"/>
+    </xs:choice>
+  </xs:group>
+  <xs:complexType name="left.type">
+    <xs:group ref="left.content"/>
+    <xs:attributeGroup ref="left.attlist"/>
+  </xs:complexType>
+  <xs:element name="left" type="left.type"/>
+
+  <!--
+		*** right***
+		The right-hand side of an equational formula.
+
+		See http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-right
+
+		content model: 
+		in DR RuleML (Ind | Data | Var | Skolem | Reify  | Expr | Plex | Time | Spatial | Interval)
+		in KR RuleML (Ind | Data | Var | Skolem | Reify  | Expr | Plex | Time | Spatial | Interval | Event | Action | Situation)
+		in PR Reaction RuleML (Ind | Data | Var | Skolem | Reify  | Expr | Plex )
+		in ECA RuleML (Ind | Data | Var | Skolem | Reify  | Expr | Plex | Time | Spatial | Interval | Event | Action)		
+		
+		attributes: @prefix?, @key?, @keyref?, @xml:id?, @xml:base?
+	-->
+  <xs:attributeGroup name="right.attlist">
+    <xs:attributeGroup ref="xml.attlist"/>
+  </xs:attributeGroup>
+  <xs:group name="right.content">
+    <xs:choice>
+      <xs:group ref="arg.content"/>
+    </xs:choice>
+  </xs:group>
+  <xs:complexType name="right.type">
+    <xs:group ref="right.content"/>
+    <xs:attributeGroup ref="right.attlist"/>
+  </xs:complexType>
+  <xs:element name="right" type="right.type"/>
+
+
+</xs:schema>

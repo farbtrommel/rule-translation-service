@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://ruleml.org/spec" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/"
+  targetNamespace="http://ruleml.org/spec" elementFormDefault="qualified">
+  <xs:annotation>
+    
+    <xs:documentation xml:lang="en">
+      
+      This is the XML Schema currie module for Reaction RuleML.
+      File: currie_module.xsd
+      Version: 1.0
+      Last Modification: 2011-03-30
+      
+      This module declares the datatypes supporting CURRIEs 
+      
+    </xs:documentation>
+    
+    <xs:appinfo>
+      <dc:title>RuleML Schema</dc:title>
+      <dc:version>1.0</dc:version>
+      <dc:creator>Adrian Paschke (paschke AT gmx.de)</dc:creator>
+      <dc:subject>RuleML, custom-built for Reaction RuleML 1.0</dc:subject> 
+      <dc:description>custom-built main module for Reaction RuleML</dc:description> 
+      <dc:date>2011-03-30T23:11:17-0300</dc:date>
+      <dc:language>en</dc:language>
+      <dc:rights>'Copyright 2015 RuleML Inc. -- Licensed under the RuleML Specification License, Version 1.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://ruleml.org/licensing/RSL1.0-RuleML. Disclaimer: THIS SPECIFICATION IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED WARRANTIES, ..., EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. See the License for the specifics governing permissions and limitations under the License.</dc:rights> <dcterms:rights>http://ruleml.org/licensing/RSL1.0-RuleML</dcterms:rights>  
+       <dc:relation>http://reaction.ruleml.org</dc:relation>
+    </xs:appinfo> 
+  </xs:annotation>
+      
+  <xs:simpleType name="curieOrIRI.datatype">
+    <xs:union memberTypes="curie.datatype xs:anyURI"/>
+  </xs:simpleType>
+  
+  <xs:simpleType name="curieOrAbsIRI.datatype">
+    <xs:union memberTypes="curie.datatype absIRI.datatype"/>
+  </xs:simpleType>
+  
+  <xs:simpleType name="termOrCurieOrIRI.datatype">
+    <xs:union memberTypes="term.datatype curie.datatype xs:anyURI" />
+  </xs:simpleType> 
+
+  <xs:simpleType name="termOrCurieOrIRIs.datatype">
+    <xs:list itemType="termOrCurieOrIRI.datatype"/>
+  </xs:simpleType> 
+
+  <xs:simpleType name="termOrCurieOrAbsIRI.datatype">
+    <xs:union memberTypes="term.datatype curie.datatype absIRI.datatype" />
+  </xs:simpleType>
+
+  <xs:simpleType name="termOrCurieOrAbsIRIs.datatype">
+    <xs:list itemType="termOrCurieOrAbsIRI.datatype"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="absIRI.datatype">
+    <xs:restriction base="xs:anyURI">
+      <xs:pattern value="[\i-[:]][\c-[:]]+:.+"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="curie.datatype">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:pattern value="(([\i-[:]][\c-[:]]*)?:)?(/[^\s/][^\s]*|[^\s/][^\s]*|[^\s]?)"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="term.datatype">
+    <xs:restriction base="xs:Name">
+      <xs:pattern value="[\i-[:]][/\c-[:]]*" />
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

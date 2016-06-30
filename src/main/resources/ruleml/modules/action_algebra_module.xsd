@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://ruleml.org/spec" xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/"
+	targetNamespace="http://ruleml.org/spec" elementFormDefault="qualified">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+          
+            action algebra module part of Reaction RuleML
+			This is the XML Schema of the algebra module for Reaction RuleML
+			File: action_algebra_module.xsd
+			Version: 1.0
+			Last Modification: 2011-03-22
+			
+			This schema declares the following Reaction RuleML elements and attributes:
+                                                    
+                  Action Algebra Operators
+                  
+                  * Operator (generic action operator)
+                  * Succession 
+                  * Choice 
+                  * Flow 
+                  * Loop                 
+
+ 			
+			The approach is modelled after that used in "Modularization of XHTML in XML Schema"
+			WD [http://www.w3.org/TR/xhtml-m12n-schema/], which will soon be integrated with
+			"Modularization of XHTML" (REC-xhtml-modularization-20010410)
+			[http://www.w3.org/TR/xhtml-modularization/].
+		</xs:documentation>
+		
+		<xs:appinfo>
+			<dc:title>Reaction RuleML Schema</dc:title>
+			<dc:version>1.0</dc:version>
+			<dc:creator>Adrian Paschke (paschke AT gmx.de)</dc:creator>
+			<dc:subject>RuleML, custom-built for Reaction RuleML 1.0</dc:subject> 
+			<dc:description>custom-built main module for Reaction RuleML</dc:description> 
+			<dc:date>2011-03-22T29:11:17-0300</dc:date>
+			<dc:language>en</dc:language>
+			<dc:rights>'Copyright 2015 RuleML Inc. -- Licensed under the RuleML Specification License, Version 1.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://ruleml.org/licensing/RSL1.0-RuleML. Disclaimer: THIS SPECIFICATION IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED WARRANTIES, ..., EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. See the License for the specifics governing permissions and limitations under the License.</dc:rights> <dcterms:rights>http://ruleml.org/licensing/RSL1.0-RuleML</dcterms:rights>  
+			 <dc:relation>http://reaction.ruleml.org</dc:relation>
+		</xs:appinfo>		
+	</xs:annotation>		
+	
+	
+	<!--( Succession | Choice | Flow | Loop | Operator )-->
+	
+	<xs:group name="action_algebra_group.content">
+		<xs:choice>
+			<xs:element ref="Succession"/>
+			<xs:element ref="Choice"/>
+			<xs:element ref="Flow"/>
+			<xs:element ref="Loop"/>
+			<xs:element name="Operator" type="ActionAlgebraOperator.type"/> 
+		</xs:choice>
+	</xs:group>	
+	
+	<!--
+      *** (Operator) ***
+      
+      content model: 
+      PR and ECA Reaction RuleML ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (do | Action | Assert | Retract | Update | Query | Succession | Choice | Flow | Loop | Operator)* )
+      CEP Reaction RuleML ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, (do | Send | Consult | Action | Assert | Retract | Update | Query | Succession | Choice | Flow | Loop | Operator)* ) 
+      
+      See: http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-Operator
+      
+      attributes: @type?, @mode?, @arity?, @card?, @minCard?, @maxCard?, @weight?, @style?, @direction?, @safety?, @scope?, @closure?, @per?, @meta?, @qualify?, @node?, @iri?, @vocab?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base?
+       
+	-->
+	<xs:attributeGroup name="ActionAlgebraOperator.attlist">
+		<xs:attributeGroup ref="action-interface.attlist"/>
+		<xs:attributeGroup ref="node-element.attlist"/>
+		<xs:attributeGroup ref="xml.attlist"/>
+	</xs:attributeGroup>
+	<xs:group name="ActionAlgebraOperator.content">
+		<xs:sequence>
+			<xs:group ref="meta-roles.content"/>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="do"/>
+				<xs:group ref="do.content"/>				
+			</xs:choice>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="ActionAlgebraOperator.type">
+		<xs:group ref="ActionAlgebraOperator.content"/>
+		<xs:attributeGroup ref="ActionAlgebraOperator.attlist"/>
+	</xs:complexType>
+	<xs:element name="Succession" type="ActionAlgebraOperator.type"/>
+	<xs:element name="Choice" type="ActionAlgebraOperator.type"/>
+	<xs:element name="Flow" type="ActionAlgebraOperator.type"/>
+	<xs:element name="Loop" type="ActionAlgebraOperator.type"/>
+
+</xs:schema>
+
+

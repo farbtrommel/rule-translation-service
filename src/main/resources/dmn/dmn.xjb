@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bindings xmlns="http://java.sun.com/xml/ns/jaxb"
+          xmlns:xs="http://www.w3.org/2001/XMLSchema"
+          xmlns:annox="http://annox.dev.java.net"
+          xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+          extensionBindingPrefixes="xjc annox"
+          version="2.1">
+    <bindings schemaLocation="dmn.xsd" node="/xs:schema">
+        <schemaBindings>
+            <package name="org.omg.dmn"/>
+        </schemaBindings>
+        <bindings node="xs:complexType[@name='tDefinitions']">
+            <annox:annotateClass>@javax.xml.bind.annotation.XmlRootElement(name="definitions")</annox:annotateClass>
+        </bindings>
+    </bindings>
+</bindings>

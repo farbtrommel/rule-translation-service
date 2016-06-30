@@ -1,0 +1,863 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RuleML xmlns="http://ruleml.org/spec">
+    <meta>
+        <Atom keyref="definitions">
+            <Rel>definitions</Rel>
+            <Ind>definitions</Ind>
+            <Ind>definitions</Ind>
+        </Atom>
+    </meta>
+    <meta>
+        <Atom keyref="decision">
+            <Rel>decision</Rel>
+            <Ind>decision</Ind>
+            <Ind></Ind>
+            <Ind>Dish</Ind>
+        </Atom>
+    </meta>
+    <Assert>
+        <formula>
+            <Rulebase iri="http://www.omg.org/spec/DMN/20151101/dmn.xsd#DecisionTable">
+                <signature>
+                    <Atom key="definitions">
+                        <Rel>definitions</Rel>
+                        <Ind>DefinitionsId</Ind>
+                        <Ind>DefinitionsName</Ind>
+                    </Atom>
+                </signature>
+                <signature>
+                    <Atom key="decision">
+                        <Rel>decision</Rel>
+                        <Ind>DecisionId</Ind>
+                        <Ind>DecisionName</Ind>
+                    </Atom>
+                </signature>
+                <signature>
+                    <Atom key="decisionTable">
+                        <Rel>decisionTable</Rel>
+                        <Ind>DecisionTableId</Ind>
+                        <Ind>HitPolicy</Ind>
+                        <Ind>Aggregation</Ind>
+                    </Atom>
+                </signature>
+                <signature>
+                    <Atom key="inputExpression">
+                        <Rel>inputExpression</Rel>
+                        <Ind>TableId</Ind>
+                        <Ind>ColumnNumber</Ind>
+                        <Var>Value</Var>
+                    </Atom>
+                </signature>
+                <signature>
+                    <Atom key="inputEntry">
+                        <Rel>inputEntry</Rel>
+                        <Ind>TableId</Ind>
+                        <Ind>ColumnNumber</Ind>
+                        <Ind>RowNumber</Ind>
+                    </Atom>
+                </signature>
+                <signature>
+                    <Atom key="rule">
+                        <Rel>rule</Rel>
+                        <Ind>TableId</Ind>
+                        <Ind>Id</Ind>
+                        <Ind>Label</Ind>
+                        <Ind>Description</Ind>
+                    </Atom>
+                </signature>
+                <signature>
+                    <Atom key="inputClause">
+                        <Rel>inputClause</Rel>
+                        <Ind>TableId</Ind>
+                        <Ind>Id</Ind>
+                        <Ind>Label</Ind>
+                        <Ind>TypeRef</Ind>
+                        <Ind>Expression</Ind>
+                    </Atom>
+                </signature>
+                <signature>
+                    <Atom key="outputExpression">
+                        <Rel>outputExpression</Rel>
+                        <Ind>TableId</Ind>
+                        <Ind>Key</Ind>
+                        <Ind>Name</Ind>
+                        <Ind>Label</Ind>
+                    </Atom>
+                </signature>
+                <signature>
+                    <Atom key="metaOutputEntry">
+                        <Rel>metaOutputEntry</Rel>
+                        <Ind>Id</Ind>
+                        <Ind>Expression</Ind>
+                    </Atom>
+                </signature>
+                <signature>
+                    <Atom key="outputEntry">
+                        <Rel>outputEntry</Rel>
+                        <Ind>TableId</Ind>
+                        <Ind>key</Ind>
+                        <Ind>RowNumber</Ind>
+                        <Ind>id</Ind>
+                        <Var>Value</Var>
+                    </Atom>
+                </signature>
+                <Atom keyref="decisionTable">
+                    <Rel>decisionTable</Rel>
+                    <Ind>decisionTable</Ind>
+                    <Ind>UNIQUE</Ind>
+                    <Ind></Ind>
+                </Atom>
+                <Implies>
+                    <meta>
+                        <Atom>
+                            <Rel>inputClause</Rel>
+                            <Ind>input1</Ind>
+                            <Ind>Season</Ind>
+                            <Ind>http://www.omg.org/spec/DMN/20151101/dmn.xsd#string</Ind>
+                            <Ind>input1</Ind>
+                        </Atom>
+                    </meta>
+                    <And>
+                        <Atom>
+                            <Rel>context</Rel>
+                            <Ind>input1</Ind>
+                            <Var>Storage0</Var>
+                        </Atom>
+                        <Equal>
+                            <Var>Value</Var>
+                            <Var>Storage0</Var>
+                        </Equal>
+                    </And>
+                    <Atom keyref="inputExpression">
+                        <Rel>inputExpression</Rel>
+                        <Ind>decisionTable</Ind>
+                        <Ind>0</Ind>
+                        <Var>Value</Var>
+                    </Atom>
+                </Implies>
+                <Implies>
+                    <meta>
+                        <Atom>
+                            <Rel>inputClause</Rel>
+                            <Ind>InputClause_0hmkumv</Ind>
+                            <Ind>How many guests</Ind>
+                            <Ind>http://www.omg.org/spec/DMN/20151101/dmn.xsd#integer</Ind>
+                            <Ind>input2</Ind>
+                        </Atom>
+                    </meta>
+                    <And>
+                        <Atom>
+                            <Rel>context</Rel>
+                            <Ind>input2</Ind>
+                            <Var>Storage2</Var>
+                        </Atom>
+                        <Equal>
+                            <Var>Value</Var>
+                            <Var>Storage2</Var>
+                        </Equal>
+                    </And>
+                    <Atom keyref="inputExpression">
+                        <Rel>inputExpression</Rel>
+                        <Ind>decisionTable</Ind>
+                        <Ind>1</Ind>
+                        <Var>Value</Var>
+                    </Atom>
+                </Implies>
+                <Atom keyref="outputExpression">
+                    <Rel>outputExpression</Rel>
+                    <Ind>decisionTable</Ind>
+                    <Ind>output1</Ind>
+                    <Ind>output1</Ind>
+                    <Ind>Dish</Ind>
+                    <Ind>http://www.omg.org/spec/DMN/20151101/dmn.xsd#string</Ind>
+                </Atom>
+            </Rulebase>
+        </formula>
+        <formula>
+            <Rulebase>
+                <oid>
+                    <Ind>row-950612891-1</Ind>
+                </oid>
+                <Atom keyref="rule">
+                    <Rel>rule</Rel>
+                    <Ind>decisionTable</Ind>
+                    <Ind>row-950612891-1</Ind>
+                    <Ind></Ind>
+                    <Ind></Ind>
+                </Atom>
+                <Implies>
+                    <meta>
+                        <Atom>
+                            <Rel>metaInputEntry</Rel>
+                            <Ind>UnaryTests_0c1o054</Ind>
+                            <Ind>Fall</Ind>
+                        </Atom>
+                    </meta>
+                    <And>
+                        <Atom keyref="inputExpression">
+                            <Rel>inputExpression</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>0</Ind>
+                            <Var>Value</Var>
+                        </Atom>
+                        <Atom>
+                            <Rel iri="http://www.w3.org/2003/11/swrlb#equal">equal</Rel>
+                            <Var>Value</Var>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Fall</Data>
+                        </Atom>
+                    </And>
+                    <Atom keyref="inputEntry">
+                        <Rel>inputEntry</Rel>
+                        <Ind>decisionTable</Ind>
+                        <Ind>0</Ind>
+                        <Ind>0</Ind>
+                    </Atom>
+                </Implies>
+                <Implies>
+                    <meta>
+                        <Atom>
+                            <Rel>metaInputEntry</Rel>
+                            <Ind>UnaryTests_1lod0sz</Ind>
+                            <Ind>&lt;=8</Ind>
+                        </Atom>
+                    </meta>
+                    <And>
+                        <Atom keyref="inputExpression">
+                            <Rel>inputExpression</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>1</Ind>
+                            <Var>Value</Var>
+                        </Atom>
+                        <Atom>
+                            <Rel iri="http://www.w3.org/2003/11/swrlb#lessThanOrEqual">lessThanOrEqual</Rel>
+                            <Var>Value</Var>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">8.0</Data>
+                        </Atom>
+                    </And>
+                    <Atom keyref="inputEntry">
+                        <Rel>inputEntry</Rel>
+                        <Ind>decisionTable</Ind>
+                        <Ind>1</Ind>
+                        <Ind>0</Ind>
+                    </Atom>
+                </Implies>
+                <Implies>
+                    <meta>
+                        <Atom>
+                            <Rel>metaOutputEntry</Rel>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">LiteralExpression_065u3ym</Data>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Spareribs</Data>
+                        </Atom>
+                    </meta>
+                    <And>
+                        <Atom keyref="inputEntry">
+                            <Rel>inputEntry</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>0</Ind>
+                            <Ind>0</Ind>
+                        </Atom>
+                        <Atom keyref="inputEntry">
+                            <Rel>inputEntry</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>1</Ind>
+                            <Ind>0</Ind>
+                        </Atom>
+                        <Equal>
+                            <Var>Value</Var>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Spareribs</Data>
+                        </Equal>
+                    </And>
+                    <Atom keyref="outputEntry">
+                        <Rel>outputEntry</Rel>
+                        <Ind>decisionTable</Ind>
+                        <Ind>output1</Ind>
+                        <Ind>0</Ind>
+                        <Ind>LiteralExpression_065u3ym</Ind>
+                        <Var>Value</Var>
+                    </Atom>
+                </Implies>
+            </Rulebase>
+        </formula>
+        <formula>
+            <Rulebase>
+                <oid>
+                    <Ind>row-950612891-2</Ind>
+                </oid>
+                <Atom keyref="rule">
+                    <Rel>rule</Rel>
+                    <Ind>decisionTable</Ind>
+                    <Ind>row-950612891-2</Ind>
+                    <Ind></Ind>
+                    <Ind></Ind>
+                </Atom>
+                <Implies>
+                    <meta>
+                        <Atom>
+                            <Rel>metaInputEntry</Rel>
+                            <Ind>UnaryTests_0u1z4ho</Ind>
+                            <Ind>Winter</Ind>
+                        </Atom>
+                    </meta>
+                    <And>
+                        <Atom keyref="inputExpression">
+                            <Rel>inputExpression</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>0</Ind>
+                            <Var>Value</Var>
+                        </Atom>
+                        <Atom>
+                            <Rel iri="http://www.w3.org/2003/11/swrlb#equal">equal</Rel>
+                            <Var>Value</Var>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Winter</Data>
+                        </Atom>
+                    </And>
+                    <Atom keyref="inputEntry">
+                        <Rel>inputEntry</Rel>
+                        <Ind>decisionTable</Ind>
+                        <Ind>0</Ind>
+                        <Ind>1</Ind>
+                    </Atom>
+                </Implies>
+                <Implies>
+                    <meta>
+                        <Atom>
+                            <Rel>metaInputEntry</Rel>
+                            <Ind>UnaryTests_1euytqf</Ind>
+                            <Ind>&lt;=8</Ind>
+                        </Atom>
+                    </meta>
+                    <And>
+                        <Atom keyref="inputExpression">
+                            <Rel>inputExpression</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>1</Ind>
+                            <Var>Value</Var>
+                        </Atom>
+                        <Atom>
+                            <Rel iri="http://www.w3.org/2003/11/swrlb#lessThanOrEqual">lessThanOrEqual</Rel>
+                            <Var>Value</Var>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">8.0</Data>
+                        </Atom>
+                    </And>
+                    <Atom keyref="inputEntry">
+                        <Rel>inputEntry</Rel>
+                        <Ind>decisionTable</Ind>
+                        <Ind>1</Ind>
+                        <Ind>1</Ind>
+                    </Atom>
+                </Implies>
+                <Implies>
+                    <meta>
+                        <Atom>
+                            <Rel>metaOutputEntry</Rel>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">LiteralExpression_198frve</Data>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Roastbeef</Data>
+                        </Atom>
+                    </meta>
+                    <And>
+                        <Atom keyref="inputEntry">
+                            <Rel>inputEntry</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>0</Ind>
+                            <Ind>1</Ind>
+                        </Atom>
+                        <Atom keyref="inputEntry">
+                            <Rel>inputEntry</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>1</Ind>
+                            <Ind>1</Ind>
+                        </Atom>
+                        <Equal>
+                            <Var>Value</Var>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Roastbeef</Data>
+                        </Equal>
+                    </And>
+                    <Atom keyref="outputEntry">
+                        <Rel>outputEntry</Rel>
+                        <Ind>decisionTable</Ind>
+                        <Ind>output1</Ind>
+                        <Ind>1</Ind>
+                        <Ind>LiteralExpression_198frve</Ind>
+                        <Var>Value</Var>
+                    </Atom>
+                </Implies>
+            </Rulebase>
+        </formula>
+        <formula>
+            <Rulebase>
+                <oid>
+                    <Ind>row-950612891-3</Ind>
+                </oid>
+                <Atom keyref="rule">
+                    <Rel>rule</Rel>
+                    <Ind>decisionTable</Ind>
+                    <Ind>row-950612891-3</Ind>
+                    <Ind></Ind>
+                    <Ind></Ind>
+                </Atom>
+                <Implies>
+                    <meta>
+                        <Atom>
+                            <Rel>metaInputEntry</Rel>
+                            <Ind>UnaryTests_1vn9t5c</Ind>
+                            <Ind>Spring</Ind>
+                        </Atom>
+                    </meta>
+                    <And>
+                        <Atom keyref="inputExpression">
+                            <Rel>inputExpression</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>0</Ind>
+                            <Var>Value</Var>
+                        </Atom>
+                        <Atom>
+                            <Rel iri="http://www.w3.org/2003/11/swrlb#equal">equal</Rel>
+                            <Var>Value</Var>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Spring</Data>
+                        </Atom>
+                    </And>
+                    <Atom keyref="inputEntry">
+                        <Rel>inputEntry</Rel>
+                        <Ind>decisionTable</Ind>
+                        <Ind>0</Ind>
+                        <Ind>2</Ind>
+                    </Atom>
+                </Implies>
+                <Implies>
+                    <meta>
+                        <Atom>
+                            <Rel>metaInputEntry</Rel>
+                            <Ind>UnaryTests_1bbbmvu</Ind>
+                            <Ind>&lt;=4</Ind>
+                        </Atom>
+                    </meta>
+                    <And>
+                        <Atom keyref="inputExpression">
+                            <Rel>inputExpression</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>1</Ind>
+                            <Var>Value</Var>
+                        </Atom>
+                        <Atom>
+                            <Rel iri="http://www.w3.org/2003/11/swrlb#lessThanOrEqual">lessThanOrEqual</Rel>
+                            <Var>Value</Var>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">4.0</Data>
+                        </Atom>
+                    </And>
+                    <Atom keyref="inputEntry">
+                        <Rel>inputEntry</Rel>
+                        <Ind>decisionTable</Ind>
+                        <Ind>1</Ind>
+                        <Ind>2</Ind>
+                    </Atom>
+                </Implies>
+                <Implies>
+                    <meta>
+                        <Atom>
+                            <Rel>metaOutputEntry</Rel>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">LiteralExpression_1bewepn</Data>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Dry Aged Gourmet Steak</Data>
+                        </Atom>
+                    </meta>
+                    <And>
+                        <Atom keyref="inputEntry">
+                            <Rel>inputEntry</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>0</Ind>
+                            <Ind>2</Ind>
+                        </Atom>
+                        <Atom keyref="inputEntry">
+                            <Rel>inputEntry</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>1</Ind>
+                            <Ind>2</Ind>
+                        </Atom>
+                        <Equal>
+                            <Var>Value</Var>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Dry Aged Gourmet Steak</Data>
+                        </Equal>
+                    </And>
+                    <Atom keyref="outputEntry">
+                        <Rel>outputEntry</Rel>
+                        <Ind>decisionTable</Ind>
+                        <Ind>output1</Ind>
+                        <Ind>2</Ind>
+                        <Ind>LiteralExpression_1bewepn</Ind>
+                        <Var>Value</Var>
+                    </Atom>
+                </Implies>
+            </Rulebase>
+        </formula>
+        <formula>
+            <Rulebase>
+                <oid>
+                    <Ind>row-950612891-4</Ind>
+                </oid>
+                <Atom keyref="rule">
+                    <Rel>rule</Rel>
+                    <Ind>decisionTable</Ind>
+                    <Ind>row-950612891-4</Ind>
+                    <Ind></Ind>
+                    <Ind>Save money</Ind>
+                </Atom>
+                <Implies>
+                    <meta>
+                        <Atom>
+                            <Rel>metaInputEntry</Rel>
+                            <Ind>UnaryTests_0ogofox</Ind>
+                            <Ind>Spring</Ind>
+                        </Atom>
+                    </meta>
+                    <And>
+                        <Atom keyref="inputExpression">
+                            <Rel>inputExpression</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>0</Ind>
+                            <Var>Value</Var>
+                        </Atom>
+                        <Atom>
+                            <Rel iri="http://www.w3.org/2003/11/swrlb#equal">equal</Rel>
+                            <Var>Value</Var>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Spring</Data>
+                        </Atom>
+                    </And>
+                    <Atom keyref="inputEntry">
+                        <Rel>inputEntry</Rel>
+                        <Ind>decisionTable</Ind>
+                        <Ind>0</Ind>
+                        <Ind>3</Ind>
+                    </Atom>
+                </Implies>
+                <Implies>
+                    <meta>
+                        <Atom>
+                            <Rel>metaInputEntry</Rel>
+                            <Ind>UnaryTests_0c60gjz</Ind>
+                            <Ind>[5..8]</Ind>
+                        </Atom>
+                    </meta>
+                    <And>
+                        <Atom keyref="inputExpression">
+                            <Rel>inputExpression</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>1</Ind>
+                            <Var>Value</Var>
+                        </Atom>
+                        <Atom>
+                            <Rel iri="http://www.w3.org/2003/11/swrlb#greaterThanOrEqual">greaterThanOrEqual</Rel>
+                            <Var>Value</Var>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">5.0</Data>
+                        </Atom>
+                        <Atom>
+                            <Rel iri="http://www.w3.org/2003/11/swrlb#lessThanOrEqual">lessThanOrEqual</Rel>
+                            <Var>Value</Var>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">8.0</Data>
+                        </Atom>
+                    </And>
+                    <Atom keyref="inputEntry">
+                        <Rel>inputEntry</Rel>
+                        <Ind>decisionTable</Ind>
+                        <Ind>1</Ind>
+                        <Ind>3</Ind>
+                    </Atom>
+                </Implies>
+                <Implies>
+                    <meta>
+                        <Atom>
+                            <Rel>metaOutputEntry</Rel>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">LiteralExpression_1lahvj7</Data>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Steak</Data>
+                        </Atom>
+                    </meta>
+                    <And>
+                        <Atom keyref="inputEntry">
+                            <Rel>inputEntry</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>0</Ind>
+                            <Ind>3</Ind>
+                        </Atom>
+                        <Atom keyref="inputEntry">
+                            <Rel>inputEntry</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>1</Ind>
+                            <Ind>3</Ind>
+                        </Atom>
+                        <Equal>
+                            <Var>Value</Var>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Steak</Data>
+                        </Equal>
+                    </And>
+                    <Atom keyref="outputEntry">
+                        <Rel>outputEntry</Rel>
+                        <Ind>decisionTable</Ind>
+                        <Ind>output1</Ind>
+                        <Ind>3</Ind>
+                        <Ind>LiteralExpression_1lahvj7</Ind>
+                        <Var>Value</Var>
+                    </Atom>
+                </Implies>
+            </Rulebase>
+        </formula>
+        <formula>
+            <Rulebase>
+                <oid>
+                    <Ind>row-950612891-5</Ind>
+                </oid>
+                <Atom keyref="rule">
+                    <Rel>rule</Rel>
+                    <Ind>decisionTable</Ind>
+                    <Ind>row-950612891-5</Ind>
+                    <Ind></Ind>
+                    <Ind>Less effort</Ind>
+                </Atom>
+                <Implies>
+                    <meta>
+                        <Atom>
+                            <Rel>metaInputEntry</Rel>
+                            <Ind>UnaryTests_1774yme</Ind>
+                            <Ind>Fall</Ind>
+                        </Atom>
+                    </meta>
+                    <And>
+                        <Atom keyref="inputExpression">
+                            <Rel>inputExpression</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>0</Ind>
+                            <Var>Value</Var>
+                        </Atom>
+                        <Atom>
+                            <Rel iri="http://www.w3.org/2003/11/swrlb#equal">equal</Rel>
+                            <Var>Value</Var>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Fall</Data>
+                        </Atom>
+                    </And>
+                    <Atom keyref="inputEntry">
+                        <Rel>inputEntry</Rel>
+                        <Ind>decisionTable</Ind>
+                        <Ind>0</Ind>
+                        <Ind>4</Ind>
+                    </Atom>
+                </Implies>
+                <Implies>
+                    <meta>
+                        <Atom>
+                            <Rel>metaInputEntry</Rel>
+                            <Ind>UnaryTests_1774yme</Ind>
+                            <Ind>Winter</Ind>
+                        </Atom>
+                    </meta>
+                    <And>
+                        <Atom keyref="inputExpression">
+                            <Rel>inputExpression</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>0</Ind>
+                            <Var>Value</Var>
+                        </Atom>
+                        <Atom>
+                            <Rel iri="http://www.w3.org/2003/11/swrlb#equal">equal</Rel>
+                            <Var>Value</Var>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Winter</Data>
+                        </Atom>
+                    </And>
+                    <Atom keyref="inputEntry">
+                        <Rel>inputEntry</Rel>
+                        <Ind>decisionTable</Ind>
+                        <Ind>0</Ind>
+                        <Ind>4</Ind>
+                    </Atom>
+                </Implies>
+                <Implies>
+                    <meta>
+                        <Atom>
+                            <Rel>metaInputEntry</Rel>
+                            <Ind>UnaryTests_1774yme</Ind>
+                            <Ind>Spring</Ind>
+                        </Atom>
+                    </meta>
+                    <And>
+                        <Atom keyref="inputExpression">
+                            <Rel>inputExpression</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>0</Ind>
+                            <Var>Value</Var>
+                        </Atom>
+                        <Atom>
+                            <Rel iri="http://www.w3.org/2003/11/swrlb#equal">equal</Rel>
+                            <Var>Value</Var>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Spring</Data>
+                        </Atom>
+                    </And>
+                    <Atom keyref="inputEntry">
+                        <Rel>inputEntry</Rel>
+                        <Ind>decisionTable</Ind>
+                        <Ind>0</Ind>
+                        <Ind>4</Ind>
+                    </Atom>
+                </Implies>
+                <Implies>
+                    <meta>
+                        <Atom>
+                            <Rel>metaInputEntry</Rel>
+                            <Ind>UnaryTests_01rn17i</Ind>
+                            <Ind>&gt;8</Ind>
+                        </Atom>
+                    </meta>
+                    <And>
+                        <Atom keyref="inputExpression">
+                            <Rel>inputExpression</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>1</Ind>
+                            <Var>Value</Var>
+                        </Atom>
+                        <Atom>
+                            <Rel iri="http://www.w3.org/2003/11/swrlb#greaterThan">greaterThan</Rel>
+                            <Var>Value</Var>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">8.0</Data>
+                        </Atom>
+                    </And>
+                    <Atom keyref="inputEntry">
+                        <Rel>inputEntry</Rel>
+                        <Ind>decisionTable</Ind>
+                        <Ind>1</Ind>
+                        <Ind>4</Ind>
+                    </Atom>
+                </Implies>
+                <Implies>
+                    <meta>
+                        <Atom>
+                            <Rel>metaOutputEntry</Rel>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">LiteralExpression_0jpd7hr</Data>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Stew</Data>
+                        </Atom>
+                    </meta>
+                    <And>
+                        <Atom keyref="inputEntry">
+                            <Rel>inputEntry</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>0</Ind>
+                            <Ind>4</Ind>
+                        </Atom>
+                        <Atom keyref="inputEntry">
+                            <Rel>inputEntry</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>1</Ind>
+                            <Ind>4</Ind>
+                        </Atom>
+                        <Equal>
+                            <Var>Value</Var>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Stew</Data>
+                        </Equal>
+                    </And>
+                    <Atom keyref="outputEntry">
+                        <Rel>outputEntry</Rel>
+                        <Ind>decisionTable</Ind>
+                        <Ind>output1</Ind>
+                        <Ind>4</Ind>
+                        <Ind>LiteralExpression_0jpd7hr</Ind>
+                        <Var>Value</Var>
+                    </Atom>
+                </Implies>
+            </Rulebase>
+        </formula>
+        <formula>
+            <Rulebase>
+                <oid>
+                    <Ind>row-950612891-6</Ind>
+                </oid>
+                <Atom keyref="rule">
+                    <Rel>rule</Rel>
+                    <Ind>decisionTable</Ind>
+                    <Ind>row-950612891-6</Ind>
+                    <Ind></Ind>
+                    <Ind>Hey, why not!?</Ind>
+                </Atom>
+                <Implies>
+                    <meta>
+                        <Atom>
+                            <Rel>metaInputEntry</Rel>
+                            <Ind>UnaryTests_0ifdx8k</Ind>
+                            <Ind>Summer</Ind>
+                        </Atom>
+                    </meta>
+                    <And>
+                        <Atom keyref="inputExpression">
+                            <Rel>inputExpression</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>0</Ind>
+                            <Var>Value</Var>
+                        </Atom>
+                        <Atom>
+                            <Rel iri="http://www.w3.org/2003/11/swrlb#equal">equal</Rel>
+                            <Var>Value</Var>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Summer</Data>
+                        </Atom>
+                    </And>
+                    <Atom keyref="inputEntry">
+                        <Rel>inputEntry</Rel>
+                        <Ind>decisionTable</Ind>
+                        <Ind>0</Ind>
+                        <Ind>5</Ind>
+                    </Atom>
+                </Implies>
+                <Implies>
+                    <meta>
+                        <Atom>
+                            <Rel>metaInputEntry</Rel>
+                            <Ind>UnaryTests_0c8ym7l</Ind>
+                            <Ind>-</Ind>
+                        </Atom>
+                    </meta>
+                    <And>
+                        <Atom keyref="inputExpression">
+                            <Rel>inputExpression</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>1</Ind>
+                            <Var>Value</Var>
+                        </Atom>
+                    </And>
+                    <Atom keyref="inputEntry">
+                        <Rel>inputEntry</Rel>
+                        <Ind>decisionTable</Ind>
+                        <Ind>1</Ind>
+                        <Ind>5</Ind>
+                    </Atom>
+                </Implies>
+                <Implies>
+                    <meta>
+                        <Atom>
+                            <Rel>metaOutputEntry</Rel>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">LiteralExpression_08d4mb6</Data>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Light Salad and a nice Steak</Data>
+                        </Atom>
+                    </meta>
+                    <And>
+                        <Atom keyref="inputEntry">
+                            <Rel>inputEntry</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>0</Ind>
+                            <Ind>5</Ind>
+                        </Atom>
+                        <Atom keyref="inputEntry">
+                            <Rel>inputEntry</Rel>
+                            <Ind>decisionTable</Ind>
+                            <Ind>1</Ind>
+                            <Ind>5</Ind>
+                        </Atom>
+                        <Equal>
+                            <Var>Value</Var>
+                            <Data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Light Salad and a nice Steak</Data>
+                        </Equal>
+                    </And>
+                    <Atom keyref="outputEntry">
+                        <Rel>outputEntry</Rel>
+                        <Ind>decisionTable</Ind>
+                        <Ind>output1</Ind>
+                        <Ind>5</Ind>
+                        <Ind>LiteralExpression_08d4mb6</Ind>
+                        <Var>Value</Var>
+                    </Atom>
+                </Implies>
+            </Rulebase>
+        </formula>
+    </Assert>
+</RuleML>

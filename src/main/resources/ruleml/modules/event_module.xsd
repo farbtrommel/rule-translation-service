@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://ruleml.org/spec" xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/"
+	targetNamespace="http://ruleml.org/spec" elementFormDefault="qualified">
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+          
+			Event module part of Reaction RuleML. It defines the core 
+			event constructs
+			
+			This is the XML Schema event module for Reaction RuleML.
+			File: event_module.xsd
+			Version: 1.0
+			Last Modification: 2011-03-29
+
+			This schema declares the following Reaction RuleML elements and attributes:
+
+			  * Event
+
+		</xs:documentation>
+		
+		<xs:appinfo>
+			<dc:title>Reaction RuleML Schema</dc:title>
+			<dc:version>1.0</dc:version>
+			<dc:creator>Adrian Paschke (paschke AT gmx.de)</dc:creator>
+			<dc:subject>RuleML, custom-built for Reaction RuleML 1.0</dc:subject> 
+			<dc:description>custom-built main module for Reaction RuleML</dc:description> 
+			<dc:date>2011-03-29T23:11:17-0300</dc:date>
+			<dc:language>en</dc:language>
+			<dc:rights>'Copyright 2015 RuleML Inc. -- Licensed under the RuleML Specification License, Version 1.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://ruleml.org/licensing/RSL1.0-RuleML. Disclaimer: THIS SPECIFICATION IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED WARRANTIES, ..., EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. See the License for the specifics governing permissions and limitations under the License.</dc:rights> <dcterms:rights>http://ruleml.org/licensing/RSL1.0-RuleML</dcterms:rights>  
+			 <dc:relation>http://reaction.ruleml.org</dc:relation>
+		</xs:appinfo>
+	</xs:annotation>
+
+
+	<!--
+	*** Event ***
+	  Explicit generic Event. 
+	  
+	  See: http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-Event
+	  
+	  The event can be defined internally 
+     	* with positional arguments <arg>, e.g., <arg><Ind>e1</Ind></arg>
+      	* with unpositional slots <slot>, e.g., <slot><Ind>name</Ind><Ind>e1</Ind></slot><slot><Ind>processingDate</Ind><Time>....</Time></slot>
+      	* as interpretation as event with <on>, e.g., <on><Atom>...</Atom></on>
+      	* by the any content model (<content>xs:any Element</content>), which acts as an extension point to embed one of the many existing XML syntaxes for events
+      or externally, where the optional @iri attribute points to an external definition of the event.
+      The optional @type attribute defines the type of the event,
+      the optional @safety attribute indicates if this is an interrupting, non-interrupting, transactional event
+      the optional @size attribute acts as a generic size counter for the number of events to be received 
+      Definitions of time and spatial events are simplified by makeing the assumption that a time/spatial object can be interpreted as event, 
+      e.g. <Event><arg><Time>...</Time></arg></Event>.
+      
+      The event instance is defined by its <arg>uments, <slot>s, as an event interpretation <on>, or arbitrary <content>.
+      An event pattern (as used, e.g., in the <on> part of a reaction rule) is defined in the <signature> 
+      of the event as event template, e.g. <Event><signature>...</signature></Event>.
+      
+	  content model: 
+	  KR Reaction RuleML: ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, ( 
+	                ((slot)*,(resl)?,((((arg|Ind|Data|Skolem|Var|Reify|Expr|Plex|Time|Spatial|Interval|Event|Situation)+, (repo)?)|(repo)),(slot)*, (resl)?)?) | 
+	                (content(xs:any)) )?
+	  PR Reaction RuleML: not used in PR Reaction RuleML
+	  ECA Reaction RuleML: ( meta*, scope*, guard*, evaluation*, signature*, qualification*, quantification*, oid?, ( 
+	                ((slot)*,(resl)?,((((arg|Ind | Data | Var | Skolem | Reify  | Expr | Plex | Time | Spatial | Interval | Event | Action | 
+		Sequence | Disjunction | Xor | Conjunction | Concurrent | Not | Any | Aperiodic | Periodic | AtLeast | ATMost | Operator )+, (repo)?)|(repo)),(slot)*, (resl)?)?) | 
+	                (content(xs:any)) )? )
+	                
+	    attributes: @type?, @mode?, @arity?, @card?, @minCard?, @maxCard?, @weight?, @style?, @direction?, @safety?, @scope?, @closure?, @per?, @meta?, @qualify?, @node?, @iri?, @vocab?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base?
+	-->
+	<xs:attributeGroup name="Event.attlist">
+		<xs:attributeGroup ref="event-interface.attlist"/>
+		<xs:attributeGroup ref="node-element.attlist"/>
+		<xs:attributeGroup ref="xml.attlist"/>
+	</xs:attributeGroup>
+	<xs:group name="Event.content">
+		<xs:sequence>
+			<xs:group ref="meta-roles.content"/>	
+			<xs:choice minOccurs="0">
+			  <xs:sequence>
+					<xs:element name="slot" type="slot.type" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element ref="resl" minOccurs="0"/>
+			  		<xs:choice minOccurs="0">
+			  		<xs:sequence>
+						<xs:choice>
+							<xs:sequence>
+								<xs:choice maxOccurs="unbounded">
+									<xs:element name="arg" type="arg_event.type"/>
+									<xs:group ref="arg_event.content"/>
+								</xs:choice>
+								<xs:element ref="repo" minOccurs="0"/>
+							</xs:sequence>
+							<xs:element ref="repo"/>
+						</xs:choice>
+						<xs:element name="slot" type="slot.type" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element ref="resl" minOccurs="0"/>
+					</xs:sequence>
+			  		</xs:choice>
+				</xs:sequence>            								
+				<xs:element name="content" type="event_anycontent.type"/>				
+			</xs:choice>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="Event.type">
+		<xs:group ref="Event.content"/>
+		<xs:attributeGroup ref="Event.attlist"/>
+	</xs:complexType>
+	<xs:element name="Event" type="Event.type"/>
+
+	<!--
+     *** arg ***
+     
+     Definition of the the arg role for Event
+     
+     see: http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-arg
+     
+     content model:  
+     in DR Reaction RuleML: (Ind|Data|Skolem|Var|Reify|Expr|Plex|Time|Spatial|Interval)
+     in KR Reaction RuleML: (Ind|Data|Skolem|Var|Reify|Expr|Plex|Time|Spatial|Interval|Event|Situation)
+     in PR Reaction RuleML: not used
+     in ECA Reaction RuleML: (Ind | Data | Var | Skolem | Reify  | Expr | Plex | Time | Spatial | Interval | Event | Action | 
+		Sequence | Disjunction | Xor | Conjunction | Concurrent | Not | Any | Aperiodic | Periodic | AtLeast | ATMost | Operator )
+     
+      attributes: @index?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base?     
+-->
+	<xs:attributeGroup name="arg_event.attlist">
+		<xs:attributeGroup ref="edge-element.attlist"/>
+		<xs:attributeGroup ref="xml.attlist"/>
+	</xs:attributeGroup>
+	<xs:group name="arg_event.content">
+		<xs:choice>
+			<xs:group ref="event_primitives.content"/>
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="arg_event.type">
+		<xs:group ref="arg_event.content"/>
+		<xs:attributeGroup ref="arg_event.attlist"/>
+	</xs:complexType>
+
+
+	<!--
+     *** content ***
+     
+     see: http://wiki.ruleml.org/index.php/Glossary_of_Reaction_RuleML_1.0#gloss-content
+     
+     content model:  xs:any*
+     
+     @prefix and @vocab is used to define a prefix and a term mapping vocabulary for the XML content
+     See CURIE to IRI and term to IRI translation
+     
+     attributes:  @index?, @prefix?, @key?, @keyref?, @xml:id?, @xml:base?
+    -->
+	<xs:attributeGroup name="event_anycontent.attlist">
+		<xs:attributeGroup ref="edge-element.attlist"/>		
+		<xs:attributeGroup ref="xml.attlist"/>
+	</xs:attributeGroup>
+	<xs:group name="event_anycontent.content">
+		<xs:choice>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="event_anycontent.type">
+		<xs:group ref="event_anycontent.content"/>
+		<xs:attributeGroup ref="event_anycontent.attlist"/>
+	</xs:complexType>
+
+
+</xs:schema>
